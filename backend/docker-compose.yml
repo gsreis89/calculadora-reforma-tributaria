@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  api:
+    build: .
+    container_name: calculadora_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://nfe_user:nfe_password@localhost:5433/nfe_db

@@ -1,0 +1,8 @@
+frontend\src\components\Sidebar.tsx:2:import { useNavigate } from "react-router-dom";
+frontend\src\components\Sidebar.tsx:22:  /** rota do React Router (HashRouter) */
+frontend\src\components\Sidebar.tsx:36:  const navigate = useNavigate();
+frontend\src\components\Sidebar.tsx:39:    // Mantém seu estado atual (MainLayout) e também navega via HashRouter.
+frontend\src\components\Sidebar.tsx:41:    navigate(item.to);
+frontend\src\main.tsx:3:import { HashRouter } from "react-router-dom";
+frontend\src\main.tsx:10:  <HashRouter>
+frontend\src\main.tsx:12:  </HashRouter>

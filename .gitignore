@@ -1,0 +1,37 @@
+# --------------------
+# Python
+# --------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+
+# --------------------
+# Node / Frontend
+# --------------------
+node_modules/
+dist/
+.vite/
+
+# --------------------
+# OS / Editor
+# --------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --------------------
+# Logs
+# --------------------
+*.log
+
+# --------------------
+# Data / uploads (se houver)
+# --------------------
+backend/data/*.csv
+backend/data/*.xlsx
+backend/data/*.json

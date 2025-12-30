@@ -1,0 +1,1519 @@
+frontend\src\App.tsx:5:  const [currentPage, setCurrentPage] = useState<PageKey>("dashboard");
+frontend\src\App.tsx:7:  return <MainLayout currentPage={currentPage} onChangePage={setCurrentPage} />;
+frontend\src\components\AutocompleteInput.tsx:3:type Props = {
+frontend\src\components\AutocompleteInput.tsx:5:  onChange: (v: string) => void;
+frontend\src\components\AutocompleteInput.tsx:10:  apiUrl: string;              // ex: http://127.0.0.1:8000
+frontend\src\components\AutocompleteInput.tsx:18:export const AutocompleteInput: React.FC<Props> = ({
+frontend\src\components\AutocompleteInput.tsx:23:  apiUrl,
+frontend\src\components\AutocompleteInput.tsx:25:  limit = 10,
+frontend\src\components\AutocompleteInput.tsx:26:  queryParams = {},
+frontend\src\components\AutocompleteInput.tsx:27:}) => {
+frontend\src\components\AutocompleteInput.tsx:28:  const [open, setOpen] = useState(false);
+frontend\src\components\AutocompleteInput.tsx:29:  const [items, setItems] = useState<string[]>([]);
+frontend\src\components\AutocompleteInput.tsx:30:  const [loading, setLoading] = useState(false);
+frontend\src\components\AutocompleteInput.tsx:31:  const [activeIndex, setActiveIndex] = useState<number>(-1);
+frontend\src\components\AutocompleteInput.tsx:33:  const boxRef = useRef<HTMLDivElement | null>(null);
+frontend\src\components\AutocompleteInput.tsx:34:  const debounceRef = useRef<number | null>(null);
+frontend\src\components\AutocompleteInput.tsx:37:    const usp = new URLSearchParams();
+frontend\src\components\AutocompleteInput.tsx:38:    Object.entries(params).forEach(([k, v]) => {
+frontend\src\components\AutocompleteInput.tsx:39:      if (v === undefined || v === null) return;
+frontend\src\components\AutocompleteInput.tsx:40:      const s = String(v).trim();
+frontend\src\components\AutocompleteInput.tsx:47:  useEffect(() => {
+frontend\src\components\AutocompleteInput.tsx:57:    return () => document.removeEventListener("mousedown", onDocClick);
+frontend\src\components\AutocompleteInput.tsx:60:  useEffect(() => {
+frontend\src\components\AutocompleteInput.tsx:61:    const q = (value || "").trim();
+frontend\src\components\AutocompleteInput.tsx:71:    debounceRef.current = window.setTimeout(async () => {
+frontend\src\components\AutocompleteInput.tsx:75:        const qs = buildQS({
+frontend\src\components\AutocompleteInput.tsx:82:        const r = await fetch(`${apiUrl}/dashboard/suggest${qs}`);
+frontend\src\components\AutocompleteInput.tsx:85:        const json = (await r.json()) as string[];
+frontend\src\components\AutocompleteInput.tsx:94:    return () => {
+frontend\src\components\AutocompleteInput.tsx:97:  }, [value, field, limit, apiUrl, JSON.stringify(queryParams)]);
+frontend\src\components\AutocompleteInput.tsx:106:    <div ref={boxRef} className="relative">
+frontend\src\components\AutocompleteInput.tsx:108:        value={value}
+frontend\src\components\AutocompleteInput.tsx:109:        onChange={(e) => onChange(e.target.value)}
+frontend\src\components\AutocompleteInput.tsx:110:        placeholder={placeholder}
+frontend\src\components\AutocompleteInput.tsx:111:        className={className}
+frontend\src\components\AutocompleteInput.tsx:112:        onFocus={() => {
+frontend\src\components\AutocompleteInput.tsx:115:        onKeyDown={(e) => {
+frontend\src\components\AutocompleteInput.tsx:116:          if (!open || items.length === 0) return;
+frontend\src\components\AutocompleteInput.tsx:118:          if (e.key === "ArrowDown") {
+frontend\src\components\AutocompleteInput.tsx:120:            setActiveIndex((i) => Math.min(i + 1, items.length - 1));
+frontend\src\components\AutocompleteInput.tsx:121:          } else if (e.key === "ArrowUp") {
+frontend\src\components\AutocompleteInput.tsx:123:            setActiveIndex((i) => Math.max(i - 1, 0));
+frontend\src\components\AutocompleteInput.tsx:124:          } else if (e.key === "Enter") {
+frontend\src\components\AutocompleteInput.tsx:125:            if (activeIndex >= 0 && activeIndex < items.length) {
+frontend\src\components\AutocompleteInput.tsx:129:          } else if (e.key === "Escape") {
+frontend\src\components\AutocompleteInput.tsx:137:        <div className="absolute z-50 mt-1 w-full bg-white border rounded-md shadow-lg max-h-64 overflow-auto">
+frontend\src\components\AutocompleteInput.tsx:139:            <div className="px-3 py-2 text-xs text-slate-500">Buscando...</div>
+frontend\src\components\AutocompleteInput.tsx:142:          {!loading && items.map((it, idx) => (
+frontend\src\components\AutocompleteInput.tsx:144:              type="button"
+frontend\src\components\AutocompleteInput.tsx:145:              key={`${it}-${idx}`}
+frontend\src\components\AutocompleteInput.tsx:146:              onMouseDown={(e) => e.preventDefault()} // evita perder foco antes do click
+frontend\src\components\AutocompleteInput.tsx:147:              onClick={() => selectItem(it)}
+frontend\src\components\AutocompleteInput.tsx:148:              className={`w-full text-left px-3 py-2 text-sm hover:bg-slate-100 ${
+frontend\src\components\AutocompleteInput.tsx:149:                idx === activeIndex ? "bg-slate-100" : ""
+frontend\src\components\AutocompleteInput.tsx:151:              title={it}
+frontend\src\components\AutocompleteInput.tsx:157:          {!loading && items.length === 0 && (
+frontend\src\components\AutocompleteInput.tsx:158:            <div className="px-3 py-2 text-xs text-slate-500">Sem sugestões</div>
+frontend\src\components\CashLedgerCard.tsx:1:type Props = {
+frontend\src\components\CashLedgerCard.tsx:7:    <div className="bg-white rounded-xl shadow p-4">
+frontend\src\components\CashLedgerCard.tsx:8:      <h3 className="font-semibold mb-2">Caixa & Split Payment</h3>
+frontend\src\components\CashLedgerCard.tsx:10:      <ul className="space-y-1 text-sm">
+frontend\src\components\CreditLedgerCard.tsx:1:type Props = {
+frontend\src\components\CreditLedgerCard.tsx:7:    <div className="bg-white rounded-xl shadow p-4">
+frontend\src\components\CreditLedgerCard.tsx:8:      <h3 className="font-semibold mb-2">Créditos (Não Cumulatividade)</h3>
+frontend\src\components\CreditLedgerCard.tsx:10:      <ul className="space-y-1 text-sm">
+frontend\src\components\ParametrosTributarios.tsx:8:} from "../services/taxParamsApi";
+frontend\src\components\ParametrosTributarios.tsx:10:const anosPadrao = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
+frontend\src\components\ParametrosTributarios.tsx:13:  const [anoFiltro, setAnoFiltro] = useState<number>(2026);
+frontend\src\components\ParametrosTributarios.tsx:14:  const [loading, setLoading] = useState(false);
+frontend\src\components\ParametrosTributarios.tsx:15:  const [erro, setErro] = useState<string | null>(null);
+frontend\src\components\ParametrosTributarios.tsx:16:  const [items, setItems] = useState<TaxParamItem[]>([]);
+frontend\src\components\ParametrosTributarios.tsx:18:  const [form, setForm] = useState<TaxParamItem>({
+frontend\src\components\ParametrosTributarios.tsx:30:      const data = await listTaxParams(anoFiltro);
+frontend\src\components\ParametrosTributarios.tsx:39:  useEffect(() => {
+frontend\src\components\ParametrosTributarios.tsx:44:  const grouped = useMemo(() => {
+frontend\src\components\ParametrosTributarios.tsx:45:    const sorted = [...items].sort((a, b) => {
+frontend\src\components\ParametrosTributarios.tsx:46:      const au = (a.uf ?? "BR").toUpperCase();
+frontend\src\components\ParametrosTributarios.tsx:47:      const bu = (b.uf ?? "BR").toUpperCase();
+frontend\src\components\ParametrosTributarios.tsx:48:      if (a.ano !== b.ano) return a.ano - b.ano;
+frontend\src\components\ParametrosTributarios.tsx:49:      if (au !== bu) return au.localeCompare(bu);
+frontend\src\components\ParametrosTributarios.tsx:58:    const { name, value } = e.target;
+frontend\src\components\ParametrosTributarios.tsx:60:    if (name === "ano") {
+frontend\src\components\ParametrosTributarios.tsx:61:      setForm((p) => ({ ...p, ano: Number(value) }));
+frontend\src\components\ParametrosTributarios.tsx:64:    if (name === "aliquota") {
+frontend\src\components\ParametrosTributarios.tsx:65:      setForm((p) => ({ ...p, aliquota: Number(String(value).replace(",", ".")) }));
+frontend\src\components\ParametrosTributarios.tsx:68:    if (name === "uf") {
+frontend\src\components\ParametrosTributarios.tsx:69:      setForm((p) => ({ ...p, uf: value ? value.toUpperCase() : null }));
+frontend\src\components\ParametrosTributarios.tsx:72:    if (name === "tipo") {
+frontend\src\components\ParametrosTributarios.tsx:73:      setForm((p) => ({ ...p, tipo: value as TaxParamTipo }));
+frontend\src\components\ParametrosTributarios.tsx:76:    if (name === "descricao") {
+frontend\src\components\ParametrosTributarios.tsx:77:      setForm((p) => ({ ...p, descricao: value }));
+frontend\src\components\ParametrosTributarios.tsx:87:      const payload: TaxParamItem = {
+frontend\src\components\ParametrosTributarios.tsx:115:    <div className="space-y-6">
+frontend\src\components\ParametrosTributarios.tsx:116:      <div className="bg-white rounded-2xl shadow p-5">
+frontend\src\components\ParametrosTributarios.tsx:117:        <h2 className="text-xl font-semibold">Parâmetros Tributários</h2>
+frontend\src\components\ParametrosTributarios.tsx:118:        <p className="text-sm text-slate-500 mt-1">
+frontend\src\components\ParametrosTributarios.tsx:124:      <div className="bg-white rounded-2xl shadow p-5 space-y-4">
+frontend\src\components\ParametrosTributarios.tsx:125:        <div className="flex flex-wrap gap-3 items-end">
+frontend\src\components\ParametrosTributarios.tsx:127:            <label className="text-sm text-slate-600">Filtrar Ano</label>
+frontend\src\components\ParametrosTributarios.tsx:129:              className="block border rounded-lg px-3 py-2"
+frontend\src\components\ParametrosTributarios.tsx:130:              value={anoFiltro}
+frontend\src\components\ParametrosTributarios.tsx:131:              onChange={(e) => setAnoFiltro(Number(e.target.value))}
+frontend\src\components\ParametrosTributarios.tsx:133:              {anosPadrao.map((a) => (
+frontend\src\components\ParametrosTributarios.tsx:134:                <option key={a} value={a}>
+frontend\src\components\ParametrosTributarios.tsx:141:          <div className="ml-auto">
+frontend\src\components\ParametrosTributarios.tsx:143:              className="px-4 py-2 rounded-lg bg-slate-900 text-white disabled:opacity-60"
+frontend\src\components\ParametrosTributarios.tsx:144:              onClick={carregar}
+frontend\src\components\ParametrosTributarios.tsx:145:              disabled={loading}
+frontend\src\components\ParametrosTributarios.tsx:152:        {erro && <div className="text-red-600 text-sm">{erro}</div>}
+frontend\src\components\ParametrosTributarios.tsx:154:        <div className="border rounded-xl p-4 space-y-3">
+frontend\src\components\ParametrosTributarios.tsx:155:          <div className="font-medium">Novo cadastro</div>
+frontend\src\components\ParametrosTributarios.tsx:157:          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+frontend\src\components\ParametrosTributarios.tsx:159:              <label className="text-sm text-slate-600">Ano</label>
+frontend\src\components\ParametrosTributarios.tsx:161:                name="ano"
+frontend\src\components\ParametrosTributarios.tsx:162:                className="block w-full border rounded-lg px-3 py-2"
+frontend\src\components\ParametrosTributarios.tsx:163:                value={form.ano}
+frontend\src\components\ParametrosTributarios.tsx:164:                onChange={handleChange}
+frontend\src\components\ParametrosTributarios.tsx:166:                {anosPadrao.map((a) => (
+frontend\src\components\ParametrosTributarios.tsx:167:                  <option key={a} value={a}>
+frontend\src\components\ParametrosTributarios.tsx:175:              <label className="text-sm text-slate-600">UF (opcional)</label>
+frontend\src\components\ParametrosTributarios.tsx:177:                name="uf"
+frontend\src\components\ParametrosTributarios.tsx:178:                className="block w-full border rounded-lg px-3 py-2"
+frontend\src\components\ParametrosTributarios.tsx:179:                value={form.uf ?? ""}
+frontend\src\components\ParametrosTributarios.tsx:180:                onChange={handleChange}
+frontend\src\components\ParametrosTributarios.tsx:181:                placeholder="AM, SP... ou vazio"
+frontend\src\components\ParametrosTributarios.tsx:186:              <label className="text-sm text-slate-600">Tipo</label>
+frontend\src\components\ParametrosTributarios.tsx:188:                name="tipo"
+frontend\src\components\ParametrosTributarios.tsx:189:                className="block w-full border rounded-lg px-3 py-2"
+frontend\src\components\ParametrosTributarios.tsx:190:                value={form.tipo}
+frontend\src\components\ParametrosTributarios.tsx:191:                onChange={handleChange}
+frontend\src\components\ParametrosTributarios.tsx:193:                <option value="CBS_PADRAO">CBS_PADRAO</option>
+frontend\src\components\ParametrosTributarios.tsx:194:                <option value="IBS_PADRAO">IBS_PADRAO</option>
+frontend\src\components\ParametrosTributarios.tsx:199:              <label className="text-sm text-slate-600">Alíquota (decimal)</label>
+frontend\src\components\ParametrosTributarios.tsx:201:                name="aliquota"
+frontend\src\components\ParametrosTributarios.tsx:202:                className="block w-full border rounded-lg px-3 py-2"
+frontend\src\components\ParametrosTributarios.tsx:203:                value={form.aliquota}
+frontend\src\components\ParametrosTributarios.tsx:204:                onChange={handleChange}
+frontend\src\components\ParametrosTributarios.tsx:205:                placeholder="0.088"
+frontend\src\components\ParametrosTributarios.tsx:207:              <div className="text-xs text-slate-500 mt-1">
+frontend\src\components\ParametrosTributarios.tsx:208:                Ex: 0.088 = 8,8%
+frontend\src\components\ParametrosTributarios.tsx:213:              <label className="text-sm text-slate-600">Descrição</label>
+frontend\src\components\ParametrosTributarios.tsx:215:                name="descricao"
+frontend\src\components\ParametrosTributarios.tsx:216:                className="block w-full border rounded-lg px-3 py-2"
+frontend\src\components\ParametrosTributarios.tsx:217:                value={form.descricao ?? ""}
+frontend\src\components\ParametrosTributarios.tsx:218:                onChange={handleChange}
+frontend\src\components\ParametrosTributarios.tsx:219:                placeholder="Opcional"
+frontend\src\components\ParametrosTributarios.tsx:225:            className="px-4 py-2 rounded-lg bg-emerald-600 text-white disabled:opacity-60"
+frontend\src\components\ParametrosTributarios.tsx:226:            onClick={salvar}
+frontend\src\components\ParametrosTributarios.tsx:227:            disabled={loading}
+frontend\src\components\ParametrosTributarios.tsx:233:        <div className="border rounded-xl overflow-hidden">
+frontend\src\components\ParametrosTributarios.tsx:234:          <div className="px-4 py-3 bg-slate-50 font-medium">Cadastros</div>
+frontend\src\components\ParametrosTributarios.tsx:236:          <div className="overflow-auto">
+frontend\src\components\ParametrosTributarios.tsx:237:            <table className="min-w-full text-sm">
+frontend\src\components\ParametrosTributarios.tsx:238:              <thead className="bg-white sticky top-0">
+frontend\src\components\ParametrosTributarios.tsx:239:                <tr className="text-left border-b">
+frontend\src\components\ParametrosTributarios.tsx:240:                  <th className="px-4 py-3">Ano</th>
+frontend\src\components\ParametrosTributarios.tsx:241:                  <th className="px-4 py-3">UF</th>
+frontend\src\components\ParametrosTributarios.tsx:242:                  <th className="px-4 py-3">Tipo</th>
+frontend\src\components\ParametrosTributarios.tsx:243:                  <th className="px-4 py-3">Alíquota</th>
+frontend\src\components\ParametrosTributarios.tsx:244:                  <th className="px-4 py-3">Descrição</th>
+frontend\src\components\ParametrosTributarios.tsx:245:                  <th className="px-4 py-3"></th>
+frontend\src\components\ParametrosTributarios.tsx:249:                {grouped.map((it, idx) => (
+frontend\src\components\ParametrosTributarios.tsx:250:                  <tr key={idx} className="border-b">
+frontend\src\components\ParametrosTributarios.tsx:251:                    <td className="px-4 py-3">{it.ano}</td>
+frontend\src\components\ParametrosTributarios.tsx:252:                    <td className="px-4 py-3">{(it.uf ?? "BR").toUpperCase()}</td>
+frontend\src\components\ParametrosTributarios.tsx:253:                    <td className="px-4 py-3">{it.tipo}</td>
+frontend\src\components\ParametrosTributarios.tsx:254:                    <td className="px-4 py-3">{it.aliquota}</td>
+frontend\src\components\ParametrosTributarios.tsx:255:                    <td className="px-4 py-3">{it.descricao ?? ""}</td>
+frontend\src\components\ParametrosTributarios.tsx:256:                    <td className="px-4 py-3 text-right">
+frontend\src\components\ParametrosTributarios.tsx:258:                        className="px-3 py-1 rounded-lg border hover:bg-slate-50 disabled:opacity-60"
+frontend\src\components\ParametrosTributarios.tsx:259:                        onClick={() => remover(it)}
+frontend\src\components\ParametrosTributarios.tsx:260:                        disabled={loading}
+frontend\src\components\ParametrosTributarios.tsx:268:                {grouped.length === 0 && (
+frontend\src\components\ParametrosTributarios.tsx:270:                    <td className="px-4 py-6 text-slate-500" colSpan={6}>
+frontend\src\components\Sidebar.tsx:15:  onChangePage: (page: PageKey) => void;
+frontend\src\components\Sidebar.tsx:18:type Item = {
+frontend\src\components\Sidebar.tsx:26:const items: Item[] = [
+frontend\src\components\Sidebar.tsx:27:  { key: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} />, to: "/dashboard" },
+frontend\src\components\Sidebar.tsx:28:  { key: "simulator", label: "Simulador", icon: <Calculator size={18} />, to: "/simulator-v4" },
+frontend\src\components\Sidebar.tsx:29:  { key: "scenarios", label: "Cenários", icon: <SlidersHorizontal size={18} />, to: "/cenarios" },
+frontend\src\components\Sidebar.tsx:30:  { key: "database", label: "Base de Dados", icon: <Database size={18} />, to: "/database" },
+frontend\src\components\Sidebar.tsx:31:  { key: "tax_params", label: "Parâmetros Tributários", icon: <Percent size={18} />, to: "/tax-params" },
+frontend\src\components\Sidebar.tsx:32:  { key: "settings", label: "Configurações", icon: <SettingsIcon size={18} />, to: "/settings" },
+frontend\src\components\Sidebar.tsx:35:export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onChangePage }) => {
+frontend\src\components\Sidebar.tsx:36:  const navigate = useNavigate();
+frontend\src\components\Sidebar.tsx:45:    <aside className="w-64 bg-slate-900 text-slate-100 flex flex-col">
+frontend\src\components\Sidebar.tsx:46:      <div className="px-6 py-4 border-b border-slate-800">
+frontend\src\components\Sidebar.tsx:47:        <h1 className="text-lg font-semibold">Calculadora da Reforma</h1>
+frontend\src\components\Sidebar.tsx:48:        <p className="text-xs text-slate-400">Simulador Tributário • Grupo Real</p>
+frontend\src\components\Sidebar.tsx:51:      <nav className="flex-1 py-4 space-y-1">
+frontend\src\components\Sidebar.tsx:52:        {items.map((item) => (
+frontend\src\components\Sidebar.tsx:54:            key={item.key}
+frontend\src\components\Sidebar.tsx:55:            onClick={() => go(item)}
+frontend\src\components\Sidebar.tsx:56:            className={`w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-slate-800 ${
+frontend\src\components\Sidebar.tsx:57:              currentPage === item.key ? "bg-slate-800 font-semibold" : ""
+frontend\src\components\Topbar.tsx:4:type TopbarProps = {
+frontend\src\components\Topbar.tsx:7:  onChangePeriodoInicio: (v: string) => void;
+frontend\src\components\Topbar.tsx:8:  onChangePeriodoFim: (v: string) => void;
+frontend\src\components\Topbar.tsx:9:  onAplicar: () => void;
+frontend\src\components\Topbar.tsx:13:export const Topbar: React.FC<TopbarProps> = ({
+frontend\src\components\Topbar.tsx:19:  applying = false,
+frontend\src\components\Topbar.tsx:20:}) => {
+frontend\src\components\Topbar.tsx:21:  const periodoLabel = useMemo(() => {
+frontend\src\components\Topbar.tsx:29:    <div className="bg-white border-b">
+frontend\src\components\Topbar.tsx:30:      <div className="px-6 py-3 flex items-center justify-between gap-3 flex-wrap">
+frontend\src\components\Topbar.tsx:31:        <div className="flex items-center gap-3 flex-wrap">
+frontend\src\components\Topbar.tsx:33:          <select className="border rounded-md px-3 py-2 text-sm bg-white" disabled>
+frontend\src\components\Topbar.tsx:38:          <div className="flex items-center gap-2">
+frontend\src\components\Topbar.tsx:40:              type="date"
+frontend\src\components\Topbar.tsx:41:              value={periodoInicio}
+frontend\src\components\Topbar.tsx:42:              onChange={(e) => onChangePeriodoInicio(e.target.value)}
+frontend\src\components\Topbar.tsx:43:              className="border rounded-md px-3 py-2 text-sm"
+frontend\src\components\Topbar.tsx:45:            <span className="text-sm text-slate-500">até</span>
+frontend\src\components\Topbar.tsx:47:              type="date"
+frontend\src\components\Topbar.tsx:48:              value={periodoFim}
+frontend\src\components\Topbar.tsx:49:              onChange={(e) => onChangePeriodoFim(e.target.value)}
+frontend\src\components\Topbar.tsx:50:              className="border rounded-md px-3 py-2 text-sm"
+frontend\src\components\Topbar.tsx:54:          <select className="border rounded-md px-3 py-2 text-sm bg-white" disabled>
+frontend\src\components\Topbar.tsx:58:          <div className="text-xs text-slate-500">{periodoLabel}</div>
+frontend\src\components\Topbar.tsx:62:          onClick={onAplicar}
+frontend\src\components\Topbar.tsx:63:          disabled={applying}
+frontend\src\components\Topbar.tsx:64:          className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium
+frontend\src\config\taxTimeline.ts:3:export type TaxKey =
+frontend\src\config\taxTimeline.ts:13:export type TaxStatus =
+frontend\src\config\taxTimeline.ts:24:   * Alíquota em percentual (ex: 0.9 => 0,9%)
+frontend\src\config\taxTimeline.ts:32:export type TaxYearConfig = Record<TaxKey, TaxConfig>;
+frontend\src\config\taxTimeline.ts:34:export const TAX_YEARS = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033] as const;
+frontend\src\config\taxTimeline.ts:36:export const TAX_TIMELINE: Record<number, TaxYearConfig> = {
+frontend\src\layout\MainLayout.tsx:10:export type PageKey =
+frontend\src\layout\MainLayout.tsx:18:export const MainLayout = ({ currentPage, onChangePage }: any) => {
+frontend\src\layout\MainLayout.tsx:19:  // =========================
+frontend\src\layout\MainLayout.tsx:21:  // =========================
+frontend\src\layout\MainLayout.tsx:22:  const [periodoInicio, setPeriodoInicio] = useState<string>("");
+frontend\src\layout\MainLayout.tsx:23:  const [periodoFim, setPeriodoFim] = useState<string>("");
+frontend\src\layout\MainLayout.tsx:26:  const [applyToken, setApplyToken] = useState<number>(0);
+frontend\src\layout\MainLayout.tsx:27:  const [applying, setApplying] = useState(false);
+frontend\src\layout\MainLayout.tsx:29:  const onAplicarPeriodo = useCallback(() => {
+frontend\src\layout\MainLayout.tsx:37:    setApplyToken((t) => t + 1);
+frontend\src\layout\MainLayout.tsx:39:    window.setTimeout(() => setApplying(false), 250);
+frontend\src\layout\MainLayout.tsx:42:  const renderPage = () => {
+frontend\src\layout\MainLayout.tsx:47:            periodoInicio={periodoInicio}
+frontend\src\layout\MainLayout.tsx:48:            periodoFim={periodoFim}
+frontend\src\layout\MainLayout.tsx:49:            applyToken={applyToken}
+frontend\src\layout\MainLayout.tsx:55:          periodoInicio={periodoInicio}
+frontend\src\layout\MainLayout.tsx:56:          periodoFim={periodoFim}
+frontend\src\layout\MainLayout.tsx:57:          applyToken={applyToken}
+frontend\src\layout\MainLayout.tsx:64:          <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\layout\MainLayout.tsx:72:    <div className="min-h-screen flex bg-slate-100">
+frontend\src\layout\MainLayout.tsx:73:      <Sidebar currentPage={currentPage} onChangePage={onChangePage} />
+frontend\src\layout\MainLayout.tsx:75:      <div className="flex-1 flex flex-col">
+frontend\src\layout\MainLayout.tsx:77:          periodoInicio={periodoInicio}
+frontend\src\layout\MainLayout.tsx:78:          periodoFim={periodoFim}
+frontend\src\layout\MainLayout.tsx:79:          onChangePeriodoInicio={setPeriodoInicio}
+frontend\src\layout\MainLayout.tsx:80:          onChangePeriodoFim={setPeriodoFim}
+frontend\src\layout\MainLayout.tsx:81:          onAplicar={onAplicarPeriodo}
+frontend\src\layout\MainLayout.tsx:82:          applying={applying}
+frontend\src\layout\MainLayout.tsx:85:        <main className="p-6">{renderPage()}</main>
+frontend\src\pages\Dashboard.tsx:16:const API = "http://127.0.0.1:8000";
+frontend\src\pages\Dashboard.tsx:18:/** =========================
+frontend\src\pages\Dashboard.tsx:20: * ========================= */
+frontend\src\pages\Dashboard.tsx:21:type Status = {
+frontend\src\pages\Dashboard.tsx:27:type DashboardPageProps = {
+frontend\src\pages\Dashboard.tsx:33:type Summary = {
+frontend\src\pages\Dashboard.tsx:47:type Kpis = {
+frontend\src\pages\Dashboard.tsx:55:type TimeSeriesPoint = {
+frontend\src\pages\Dashboard.tsx:63:type DashboardOverview = {
+frontend\src\pages\Dashboard.tsx:70:type CompareKpis = {
+frontend\src\pages\Dashboard.tsx:79:type CompareTributo = {
+frontend\src\pages\Dashboard.tsx:85:type CompareTimeSeriesPoint = {
+frontend\src\pages\Dashboard.tsx:92:type DashboardCompare = {
+frontend\src\pages\Dashboard.tsx:98:type DashboardFilters = {
+frontend\src\pages\Dashboard.tsx:108:type BreakdownItem = { key: string; value: number };
+frontend\src\pages\Dashboard.tsx:110:type DashboardBreakdowns = {
+frontend\src\pages\Dashboard.tsx:121:type CreditLedgerSummary = {
+frontend\src\pages\Dashboard.tsx:129:type CashLedgerSummary = {
+frontend\src\pages\Dashboard.tsx:138:type SimulatorV4RunResponse = {
+frontend\src\pages\Dashboard.tsx:143:/** =========================
+frontend\src\pages\Dashboard.tsx:145: * ========================= */
+frontend\src\pages\Dashboard.tsx:147:  const n = Number(v);
+frontend\src\pages\Dashboard.tsx:152:const BRL = new Intl.NumberFormat("pt-BR", {
+frontend\src\pages\Dashboard.tsx:162:  const n = safeNumber(v);
+frontend\src\pages\Dashboard.tsx:167:const NUM0 = new Intl.NumberFormat("pt-BR", {
+frontend\src\pages\Dashboard.tsx:175:function truncateLabel(s: any, max = 14) {
+frontend\src\pages\Dashboard.tsx:176:  const t = String(s ?? "");
+frontend\src\pages\Dashboard.tsx:177:  if (t.length <= max) return t;
+frontend\src\pages\Dashboard.tsx:182:  const usp = new URLSearchParams();
+frontend\src\pages\Dashboard.tsx:183:  Object.entries(params).forEach(([k, v]) => {
+frontend\src\pages\Dashboard.tsx:184:    if (v === undefined || v === null) return;
+frontend\src\pages\Dashboard.tsx:185:    const s = String(v).trim();
+frontend\src\pages\Dashboard.tsx:189:  const qs = usp.toString();
+frontend\src\pages\Dashboard.tsx:193:const TooltipMoney: React.FC<any> = ({ active, payload, label }) => {
+frontend\src\pages\Dashboard.tsx:197:    <div className="bg-white border rounded-lg shadow-sm px-3 py-2 text-xs text-slate-700">
+frontend\src\pages\Dashboard.tsx:198:      <div className="font-semibold mb-1">{label}</div>
+frontend\src\pages\Dashboard.tsx:199:      <div className="space-y-1">
+frontend\src\pages\Dashboard.tsx:200:        {payload.map((p: any) => (
+frontend\src\pages\Dashboard.tsx:201:          <div key={p.dataKey} className="flex justify-between gap-6">
+frontend\src\pages\Dashboard.tsx:202:            <span className="text-slate-500">{p.name}</span>
+frontend\src\pages\Dashboard.tsx:203:            <span className="font-semibold">{formatMoneyBR(safeNumber(p.value))}</span>
+frontend\src\pages\Dashboard.tsx:213:    <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Dashboard.tsx:214:      <div className="h-3 w-24 bg-slate-200 rounded mb-3" />
+frontend\src\pages\Dashboard.tsx:215:      <div className="h-6 w-40 bg-slate-200 rounded" />
+frontend\src\pages\Dashboard.tsx:222:    <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:223:      <div className="text-sm font-semibold text-slate-800">{props.title}</div>
+frontend\src\pages\Dashboard.tsx:225:      <div className="h-[300px] mt-3">
+frontend\src\pages\Dashboard.tsx:226:        <div className="h-full w-full rounded-lg bg-slate-100 relative overflow-hidden">
+frontend\src\pages\Dashboard.tsx:227:          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100" />
+frontend\src\pages\Dashboard.tsx:228:          <div className="absolute bottom-4 left-4 right-4 flex gap-2">
+frontend\src\pages\Dashboard.tsx:229:            <div className="h-2 w-2/12 bg-slate-200 rounded" />
+frontend\src\pages\Dashboard.tsx:230:            <div className="h-2 w-3/12 bg-slate-200 rounded" />
+frontend\src\pages\Dashboard.tsx:231:            <div className="h-2 w-4/12 bg-slate-200 rounded" />
+frontend\src\pages\Dashboard.tsx:241:    <div className="flex items-start justify-between gap-3 flex-wrap">
+frontend\src\pages\Dashboard.tsx:243:        <h2 className="text-base font-semibold text-slate-800">{props.title}</h2>
+frontend\src\pages\Dashboard.tsx:244:        {props.subtitle && <p className="text-xs text-slate-500 mt-1">{props.subtitle}</p>}
+frontend\src\pages\Dashboard.tsx:246:      {props.right ? <div className="shrink-0">{props.right}</div> : null}
+frontend\src\pages\Dashboard.tsx:253:    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs bg-slate-100 text-slate-700">
+frontend\src\pages\Dashboard.tsx:259:/** =========================
+frontend\src\pages\Dashboard.tsx:261: * ========================= */
+frontend\src\pages\Dashboard.tsx:262:type SuggestField = "produto" | "ncm" | "cfop";
+frontend\src\pages\Dashboard.tsx:264:type AutocompleteProps = {
+frontend\src\pages\Dashboard.tsx:267:  onChangeValue: (v: string) => void;
+frontend\src\pages\Dashboard.tsx:274:const AutocompleteInput: React.FC<AutocompleteProps> = ({
+frontend\src\pages\Dashboard.tsx:280:  disabled = false,
+frontend\src\pages\Dashboard.tsx:282:}) => {
+frontend\src\pages\Dashboard.tsx:283:  const [open, setOpen] = useState(false);
+frontend\src\pages\Dashboard.tsx:284:  const [items, setItems] = useState<string[]>([]);
+frontend\src\pages\Dashboard.tsx:285:  const [loading, setLoading] = useState(false);
+frontend\src\pages\Dashboard.tsx:286:  const [activeIndex, setActiveIndex] = useState(-1);
+frontend\src\pages\Dashboard.tsx:288:  const boxRef = useRef<HTMLDivElement | null>(null);
+frontend\src\pages\Dashboard.tsx:289:  const debounceRef = useRef<number | null>(null);
+frontend\src\pages\Dashboard.tsx:291:  useEffect(() => {
+frontend\src\pages\Dashboard.tsx:300:    return () => document.removeEventListener("mousedown", onDocClick);
+frontend\src\pages\Dashboard.tsx:303:  useEffect(() => {
+frontend\src\pages\Dashboard.tsx:304:    const q = (value || "").trim();
+frontend\src\pages\Dashboard.tsx:316:    debounceRef.current = window.setTimeout(async () => {
+frontend\src\pages\Dashboard.tsx:320:        const qs = buildQuery({
+frontend\src\pages\Dashboard.tsx:327:        const r = await fetch(`${API}/dashboard/suggest${qs}`);
+frontend\src\pages\Dashboard.tsx:335:        const json = (await r.json()) as { items?: string[] };
+frontend\src\pages\Dashboard.tsx:336:        const list = Array.isArray(json?.items) ? json.items.slice(0, 10) : [];
+frontend\src\pages\Dashboard.tsx:349:    return () => {
+frontend\src\pages\Dashboard.tsx:362:    <div ref={boxRef} className="relative">
+frontend\src\pages\Dashboard.tsx:364:        disabled={disabled}
+frontend\src\pages\Dashboard.tsx:365:        value={value}
+frontend\src\pages\Dashboard.tsx:366:        onChange={(e) => onChangeValue(e.target.value)}
+frontend\src\pages\Dashboard.tsx:367:        placeholder={placeholder}
+frontend\src\pages\Dashboard.tsx:368:        className={className}
+frontend\src\pages\Dashboard.tsx:369:        onFocus={() => {
+frontend\src\pages\Dashboard.tsx:372:        onKeyDown={(e) => {
+frontend\src\pages\Dashboard.tsx:373:          if (!open || items.length === 0) return;
+frontend\src\pages\Dashboard.tsx:375:          if (e.key === "ArrowDown") {
+frontend\src\pages\Dashboard.tsx:377:            setActiveIndex((i) => Math.min(i + 1, items.length - 1));
+frontend\src\pages\Dashboard.tsx:378:          } else if (e.key === "ArrowUp") {
+frontend\src\pages\Dashboard.tsx:380:            setActiveIndex((i) => Math.max(i - 1, 0));
+frontend\src\pages\Dashboard.tsx:381:          } else if (e.key === "Enter") {
+frontend\src\pages\Dashboard.tsx:382:            if (activeIndex >= 0 && activeIndex < items.length) {
+frontend\src\pages\Dashboard.tsx:386:          } else if (e.key === "Escape") {
+frontend\src\pages\Dashboard.tsx:394:        <div className="absolute z-50 mt-1 w-full bg-white border rounded-md shadow-lg max-h-64 overflow-auto">
+frontend\src\pages\Dashboard.tsx:395:          {loading && <div className="px-3 py-2 text-xs text-slate-500">Buscando...</div>}
+frontend\src\pages\Dashboard.tsx:398:            items.map((it, idx) => (
+frontend\src\pages\Dashboard.tsx:400:                type="button"
+frontend\src\pages\Dashboard.tsx:401:                key={`${it}-${idx}`}
+frontend\src\pages\Dashboard.tsx:402:                onMouseDown={(e) => e.preventDefault()} // mantém foco no input
+frontend\src\pages\Dashboard.tsx:403:                onClick={() => selectItem(it)}
+frontend\src\pages\Dashboard.tsx:404:                className={`w-full text-left px-3 py-2 text-sm hover:bg-slate-100 ${
+frontend\src\pages\Dashboard.tsx:405:                  idx === activeIndex ? "bg-slate-100" : ""
+frontend\src\pages\Dashboard.tsx:407:                title={it}
+frontend\src\pages\Dashboard.tsx:418:/** =========================
+frontend\src\pages\Dashboard.tsx:420: * ========================= */
+frontend\src\pages\Dashboard.tsx:421:export const Dashboard: React.FC<DashboardPageProps> = ({
+frontend\src\pages\Dashboard.tsx:422:  periodoInicio = "",
+frontend\src\pages\Dashboard.tsx:423:  periodoFim = "",
+frontend\src\pages\Dashboard.tsx:424:  applyToken = 0,
+frontend\src\pages\Dashboard.tsx:425:}) => {
+frontend\src\pages\Dashboard.tsx:427:  const [data, setData] = useState<DashboardOverview | null>(null);
+frontend\src\pages\Dashboard.tsx:428:  const [loading, setLoading] = useState(false);
+frontend\src\pages\Dashboard.tsx:429:  const [err, setErr] = useState<string | null>(null);
+frontend\src\pages\Dashboard.tsx:432:  const [anoReforma, setAnoReforma] = useState<number>(2027);
+frontend\src\pages\Dashboard.tsx:433:  const [compare, setCompare] = useState<DashboardCompare | null>(null);
+frontend\src\pages\Dashboard.tsx:434:  const [compareLoading, setCompareLoading] = useState(false);
+frontend\src\pages\Dashboard.tsx:435:  const [compareErr, setCompareErr] = useState<string | null>(null);
+frontend\src\pages\Dashboard.tsx:438:  const [breakdowns, setBreakdowns] = useState<DashboardBreakdowns | null>(null);
+frontend\src\pages\Dashboard.tsx:439:  const [bdLoading, setBdLoading] = useState(false);
+frontend\src\pages\Dashboard.tsx:440:  const [bdErr, setBdErr] = useState<string | null>(null);
+frontend\src\pages\Dashboard.tsx:443:  const [simV4, setSimV4] = useState<SimulatorV4RunResponse | null>(null);
+frontend\src\pages\Dashboard.tsx:444:  const [simV4Loading, setSimV4Loading] = useState(false);
+frontend\src\pages\Dashboard.tsx:445:  const [simV4Err, setSimV4Err] = useState<string | null>(null);
+frontend\src\pages\Dashboard.tsx:448:  const abortRef = useRef<AbortController | null>(null);
+frontend\src\pages\Dashboard.tsx:451:  const [filters, setFilters] = useState<DashboardFilters>({
+frontend\src\pages\Dashboard.tsx:461:  const [appliedFilters, setAppliedFilters] = useState<DashboardFilters>({
+frontend\src\pages\Dashboard.tsx:472:    const { name, value } = e.target;
+frontend\src\pages\Dashboard.tsx:473:    setFilters((prev) => ({ ...prev, [name]: value }));
+frontend\src\pages\Dashboard.tsx:480:    abortRef.current = new AbortController();
+frontend\src\pages\Dashboard.tsx:481:    const { signal } = abortRef.current;
+frontend\src\pages\Dashboard.tsx:483:    const qsBase = {
+frontend\src\pages\Dashboard.tsx:493:    const qsOverview = buildQuery(qsBase);
+frontend\src\pages\Dashboard.tsx:494:    const qsCompare = buildQuery({ ...qsBase, ano_reforma: year });
+frontend\src\pages\Dashboard.tsx:495:    const qsBreakdowns = buildQuery({ ...qsBase, limit: 10 });
+frontend\src\pages\Dashboard.tsx:506:      const [r1, r2, r3] = await Promise.all([
+frontend\src\pages\Dashboard.tsx:507:        fetch(`${API}/dashboard/overview${qsOverview}`, { signal }),
+frontend\src\pages\Dashboard.tsx:508:        fetch(`${API}/dashboard/compare${qsCompare}`, { signal }),
+frontend\src\pages\Dashboard.tsx:509:        fetch(`${API}/dashboard/breakdowns${qsBreakdowns}`, { signal }),
+frontend\src\pages\Dashboard.tsx:516:      const [j1, j2, j3] = await Promise.all([r1.json(), r2.json(), r3.json()]);
+frontend\src\pages\Dashboard.tsx:523:      if (e?.name === "AbortError") return;
+frontend\src\pages\Dashboard.tsx:526:      const msg = e?.message ?? "Erro ao carregar dados.";
+frontend\src\pages\Dashboard.tsx:546:      const qs = buildQuery({
+frontend\src\pages\Dashboard.tsx:556:      const r = await fetch(`${API}/dashboard/overview${qs}`);
+frontend\src\pages\Dashboard.tsx:558:        const t = await r.text();
+frontend\src\pages\Dashboard.tsx:562:      const json = (await r.json()) as DashboardOverview;
+frontend\src\pages\Dashboard.tsx:578:      const qs = buildQuery({
+frontend\src\pages\Dashboard.tsx:589:      const r = await fetch(`${API}/dashboard/compare${qs}`);
+frontend\src\pages\Dashboard.tsx:591:        const t = await r.text();
+frontend\src\pages\Dashboard.tsx:595:      const json = (await r.json()) as DashboardCompare;
+frontend\src\pages\Dashboard.tsx:611:      const qs = buildQuery({
+frontend\src\pages\Dashboard.tsx:622:      const r = await fetch(`${API}/dashboard/breakdowns${qs}`);
+frontend\src\pages\Dashboard.tsx:624:        const t = await r.text();
+frontend\src\pages\Dashboard.tsx:628:      const json = (await r.json()) as DashboardBreakdowns;
+frontend\src\pages\Dashboard.tsx:644:      const qs = buildQuery({
+frontend\src\pages\Dashboard.tsx:657:      const r = await fetch(`${API}/simulator/v4/run${qs}`);
+frontend\src\pages\Dashboard.tsx:659:        const t = await r.text();
+frontend\src\pages\Dashboard.tsx:663:      const json = (await r.json()) as SimulatorV4RunResponse;
+frontend\src\pages\Dashboard.tsx:675:    const empty: DashboardFilters = {
+frontend\src\pages\Dashboard.tsx:691:    const pi = (filters.periodo_inicio || "").trim();
+frontend\src\pages\Dashboard.tsx:692:    const pf = (filters.periodo_fim || "").trim();
+frontend\src\pages\Dashboard.tsx:698:    const normalized: DashboardFilters = {
+frontend\src\pages\Dashboard.tsx:714:  useEffect(() => {
+frontend\src\pages\Dashboard.tsx:721:  useEffect(() => {
+frontend\src\pages\Dashboard.tsx:725:    setFilters((prev) => ({
+frontend\src\pages\Dashboard.tsx:731:    const nextApplied: DashboardFilters = {
+frontend\src\pages\Dashboard.tsx:743:  const hasBase = !!data?.status?.exists;
+frontend\src\pages\Dashboard.tsx:745:  const summaryCards = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:746:    const s = data?.summary;
+frontend\src\pages\Dashboard.tsx:761:  const series = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:762:    const ts = data?.timeseries ?? [];
+frontend\src\pages\Dashboard.tsx:763:    return ts.map((p) => {
+frontend\src\pages\Dashboard.tsx:764:      const receita = safeNumber((p as any).receita);
+frontend\src\pages\Dashboard.tsx:765:      const icms = safeNumber((p as any).icms);
+frontend\src\pages\Dashboard.tsx:766:      const pis = safeNumber((p as any).pis);
+frontend\src\pages\Dashboard.tsx:767:      const cofins = safeNumber((p as any).cofins);
+frontend\src\pages\Dashboard.tsx:779:  const kpis = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:781:    const s = data?.summary;
+frontend\src\pages\Dashboard.tsx:792:  const compareSeries = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:793:    const ts = compare?.timeseries ?? [];
+frontend\src\pages\Dashboard.tsx:794:    return ts.map((p) => ({
+frontend\src\pages\Dashboard.tsx:802:  const compareDetalhes = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:803:    const det = compare?.detalhes ?? [];
+frontend\src\pages\Dashboard.tsx:804:    return det.map((d) => ({
+frontend\src\pages\Dashboard.tsx:812:  const activeFiltersLabel = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:813:    const parts: string[] = [];
+frontend\src\pages\Dashboard.tsx:829:  const anyLoading = loading || compareLoading || bdLoading || simV4Loading;
+frontend\src\pages\Dashboard.tsx:832:  const suggestBaseParams = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:842:  const appliedPills = useMemo(() => {
+frontend\src\pages\Dashboard.tsx:843:    const out: string[] = [];
+frontend\src\pages\Dashboard.tsx:858:    <div className="w-full px-6 space-y-6">
+frontend\src\pages\Dashboard.tsx:860:      <header className="flex items-start justify-between gap-3 flex-wrap">
+frontend\src\pages\Dashboard.tsx:862:          <h1 className="text-2xl font-semibold text-slate-800">Dashboard</h1>
+frontend\src\pages\Dashboard.tsx:863:          <p className="text-sm text-slate-500 mt-1">
+frontend\src\pages\Dashboard.tsx:869:          onClick={() => {
+frontend\src\pages\Dashboard.tsx:873:          disabled={anyLoading}
+frontend\src\pages\Dashboard.tsx:874:          className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-60"
+frontend\src\pages\Dashboard.tsx:881:      <div className="bg-white rounded-xl shadow-sm p-5 space-y-4">
+frontend\src\pages\Dashboard.tsx:883:          title="Filtros"
+frontend\src\pages\Dashboard.tsx:884:          subtitle={activeFiltersLabel}
+frontend\src\pages\Dashboard.tsx:885:          right={
+frontend\src\pages\Dashboard.tsx:886:            <div className="flex items-center gap-2">
+frontend\src\pages\Dashboard.tsx:888:                onClick={resetFilters}
+frontend\src\pages\Dashboard.tsx:889:                disabled={anyLoading}
+frontend\src\pages\Dashboard.tsx:890:                className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-slate-100 text-slate-800 hover:bg-slate-200 disabled:opacity-60"
+frontend\src\pages\Dashboard.tsx:896:                onClick={applyFilters}
+frontend\src\pages\Dashboard.tsx:897:                disabled={anyLoading}
+frontend\src\pages\Dashboard.tsx:898:                className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60"
+frontend\src\pages\Dashboard.tsx:907:        <div className="grid gap-3 md:grid-cols-2">
+frontend\src\pages\Dashboard.tsx:909:            <label className="block text-xs text-slate-500 mb-1">Período início</label>
+frontend\src\pages\Dashboard.tsx:911:              type="date"
+frontend\src\pages\Dashboard.tsx:912:              name="periodo_inicio"
+frontend\src\pages\Dashboard.tsx:913:              value={filters.periodo_inicio}
+frontend\src\pages\Dashboard.tsx:914:              onChange={onChangeFilter}
+frontend\src\pages\Dashboard.tsx:915:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:920:            <label className="block text-xs text-slate-500 mb-1">Período fim</label>
+frontend\src\pages\Dashboard.tsx:922:              type="date"
+frontend\src\pages\Dashboard.tsx:923:              name="periodo_fim"
+frontend\src\pages\Dashboard.tsx:924:              value={filters.periodo_fim}
+frontend\src\pages\Dashboard.tsx:925:              onChange={onChangeFilter}
+frontend\src\pages\Dashboard.tsx:926:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:930:          <div className="md:col-span-2 text-xs text-slate-500">
+frontend\src\pages\Dashboard.tsx:936:        <div className="grid gap-3 md:grid-cols-5">
+frontend\src\pages\Dashboard.tsx:938:            <label className="block text-xs text-slate-500 mb-1">UF Origem</label>
+frontend\src\pages\Dashboard.tsx:940:              name="uf_origem"
+frontend\src\pages\Dashboard.tsx:941:              value={filters.uf_origem}
+frontend\src\pages\Dashboard.tsx:942:              onChange={onChangeFilter}
+frontend\src\pages\Dashboard.tsx:943:              placeholder="Ex: AM"
+frontend\src\pages\Dashboard.tsx:944:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:949:            <label className="block text-xs text-slate-500 mb-1">UF Destino</label>
+frontend\src\pages\Dashboard.tsx:951:              name="uf_destino"
+frontend\src\pages\Dashboard.tsx:952:              value={filters.uf_destino}
+frontend\src\pages\Dashboard.tsx:953:              onChange={onChangeFilter}
+frontend\src\pages\Dashboard.tsx:954:              placeholder="Ex: SP"
+frontend\src\pages\Dashboard.tsx:955:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:960:            <label className="block text-xs text-slate-500 mb-1">NCM</label>
+frontend\src\pages\Dashboard.tsx:962:              field="ncm"
+frontend\src\pages\Dashboard.tsx:963:              value={filters.ncm}
+frontend\src\pages\Dashboard.tsx:964:              onChangeValue={(v) => setFilters((prev) => ({ ...prev, ncm: v }))}
+frontend\src\pages\Dashboard.tsx:965:              placeholder="Ex: 12345678"
+frontend\src\pages\Dashboard.tsx:966:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:967:              queryParams={{
+frontend\src\pages\Dashboard.tsx:973:            <div className="text-[10px] text-slate-400 mt-1">Digite 2+ caracteres.</div>
+frontend\src\pages\Dashboard.tsx:977:            <label className="block text-xs text-slate-500 mb-1">Produto</label>
+frontend\src\pages\Dashboard.tsx:979:              field="produto"
+frontend\src\pages\Dashboard.tsx:980:              value={filters.produto}
+frontend\src\pages\Dashboard.tsx:981:              onChangeValue={(v) => setFilters((prev) => ({ ...prev, produto: v }))}
+frontend\src\pages\Dashboard.tsx:982:              placeholder="Ex: açúcar"
+frontend\src\pages\Dashboard.tsx:983:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:984:              queryParams={{
+frontend\src\pages\Dashboard.tsx:990:            <div className="text-[10px] text-slate-400 mt-1">Digite 2+ caracteres.</div>
+frontend\src\pages\Dashboard.tsx:994:            <label className="block text-xs text-slate-500 mb-1">CFOP</label>
+frontend\src\pages\Dashboard.tsx:996:              field="cfop"
+frontend\src\pages\Dashboard.tsx:997:              value={filters.cfop}
+frontend\src\pages\Dashboard.tsx:998:              onChangeValue={(v) => setFilters((prev) => ({ ...prev, cfop: v }))}
+frontend\src\pages\Dashboard.tsx:999:              placeholder="Ex: 5102"
+frontend\src\pages\Dashboard.tsx:1000:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:1001:              queryParams={{
+frontend\src\pages\Dashboard.tsx:1007:            <div className="text-[10px] text-slate-400 mt-1">Digite 2+ caracteres.</div>
+frontend\src\pages\Dashboard.tsx:1013:      <div className="grid gap-4 lg:grid-cols-3">
+frontend\src\pages\Dashboard.tsx:1015:        <div className="bg-white rounded-xl shadow-sm p-6 lg:col-span-1">
+frontend\src\pages\Dashboard.tsx:1016:          <SectionTitle title="Status da base" subtitle="Situação do CSV carregado para o dashboard." />
+frontend\src\pages\Dashboard.tsx:1017:          <div className="mt-4 text-sm text-slate-700">
+frontend\src\pages\Dashboard.tsx:1025:                <div className="mt-1">
+frontend\src\pages\Dashboard.tsx:1028:                <div className="text-xs text-slate-400 break-all mt-3">
+frontend\src\pages\Dashboard.tsx:1041:        <div className="bg-white rounded-xl shadow-sm p-6 lg:col-span-2">
+frontend\src\pages\Dashboard.tsx:1043:            title="Recorte atual"
+frontend\src\pages\Dashboard.tsx:1044:            subtitle="Confirmação rápida do que está sendo analisado (filtros + base + totais)."
+frontend\src\pages\Dashboard.tsx:1047:          <div className="mt-4 flex flex-wrap gap-2">
+frontend\src\pages\Dashboard.tsx:1049:              appliedPills.map((p) => <InfoPill key={p}>{p}</InfoPill>)
+frontend\src\pages\Dashboard.tsx:1055:          <div className="mt-4 grid gap-3 md:grid-cols-4">
+frontend\src\pages\Dashboard.tsx:1056:            <div className="border rounded-lg p-3">
+frontend\src\pages\Dashboard.tsx:1057:              <div className="text-[11px] text-slate-500">Período (base)</div>
+frontend\src\pages\Dashboard.tsx:1058:              <div className="text-sm font-semibold mt-1">
+frontend\src\pages\Dashboard.tsx:1063:            <div className="border rounded-lg p-3">
+frontend\src\pages\Dashboard.tsx:1064:              <div className="text-[11px] text-slate-500">Linhas (recorte)</div>
+frontend\src\pages\Dashboard.tsx:1065:              <div className="text-sm font-semibold mt-1">{data?.summary?.rows ?? 0}</div>
+frontend\src\pages\Dashboard.tsx:1068:            <div className="border rounded-lg p-3 md:col-span-2">
+frontend\src\pages\Dashboard.tsx:1069:              <div className="text-[11px] text-slate-500">Receita total (recorte)</div>
+frontend\src\pages\Dashboard.tsx:1070:              <div className="text-sm font-semibold mt-1">
+frontend\src\pages\Dashboard.tsx:1076:          <div className="mt-3 text-xs text-slate-500">
+frontend\src\pages\Dashboard.tsx:1085:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1086:          <p className="text-sm text-red-600">{err}</p>
+frontend\src\pages\Dashboard.tsx:1087:          <p className="text-xs text-slate-500 mt-2">
+frontend\src\pages\Dashboard.tsx:1088:            Dica: DevTools (F12) &gt; Network &gt; GET <b>{API}/dashboard/overview</b>
+frontend\src\pages\Dashboard.tsx:1094:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1095:          <p className="text-sm text-red-600">{compareErr}</p>
+frontend\src\pages\Dashboard.tsx:1096:          <p className="text-xs text-slate-500 mt-2">
+frontend\src\pages\Dashboard.tsx:1097:            Dica: DevTools (F12) &gt; Network &gt; GET <b>{API}/dashboard/compare?ano_reforma={anoReforma}</b>
+frontend\src\pages\Dashboard.tsx:1103:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1104:          <p className="text-sm text-red-600">{bdErr}</p>
+frontend\src\pages\Dashboard.tsx:1105:          <p className="text-xs text-slate-500 mt-2">
+frontend\src\pages\Dashboard.tsx:1106:            Dica: DevTools (F12) &gt; Network &gt; GET <b>{API}/dashboard/breakdowns</b>
+frontend\src\pages\Dashboard.tsx:1112:      {!loading && hasBase && data?.summary?.exists && (data.summary.rows ?? 0) === 0 && (
+frontend\src\pages\Dashboard.tsx:1113:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1114:          <div className="text-sm text-slate-700 font-semibold">Nenhum registro encontrado</div>
+frontend\src\pages\Dashboard.tsx:1115:          <div className="text-sm text-slate-500 mt-1">
+frontend\src\pages\Dashboard.tsx:1123:        <div className="grid gap-4 md:grid-cols-4">
+frontend\src\pages\Dashboard.tsx:1132:        <div className="grid gap-4 md:grid-cols-4">
+frontend\src\pages\Dashboard.tsx:1133:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Dashboard.tsx:1134:            <div className="text-xs text-slate-500">Receita total</div>
+frontend\src\pages\Dashboard.tsx:1135:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpis.receita_total)}</div>
+frontend\src\pages\Dashboard.tsx:1138:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Dashboard.tsx:1139:            <div className="text-xs text-slate-500">Carga atual (ICMS+PIS+COFINS)</div>
+frontend\src\pages\Dashboard.tsx:1140:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpis.carga_atual_total)}</div>
+frontend\src\pages\Dashboard.tsx:1143:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Dashboard.tsx:1144:            <div className="text-xs text-slate-500">ICMS</div>
+frontend\src\pages\Dashboard.tsx:1145:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpis.icms_total)}</div>
+frontend\src\pages\Dashboard.tsx:1148:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Dashboard.tsx:1149:            <div className="text-xs text-slate-500">PIS + COFINS</div>
+frontend\src\pages\Dashboard.tsx:1150:            <div className="text-xl font-semibold text-slate-900 mt-1">
+frontend\src\pages\Dashboard.tsx:1158:      <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1159:        <div className="flex items-center justify-between gap-3 flex-wrap">
+frontend\src\pages\Dashboard.tsx:1160:          <h2 className="font-semibold text-slate-700">Insights do recorte</h2>
+frontend\src\pages\Dashboard.tsx:1161:          {bdLoading && <div className="text-xs text-slate-500">Carregando...</div>}
+frontend\src\pages\Dashboard.tsx:1166:          <div className="grid gap-4 lg:grid-cols-2 mt-6">
+frontend\src\pages\Dashboard.tsx:1167:            <ChartSkeleton title="Top 10 Produtos (Receita)" />
+frontend\src\pages\Dashboard.tsx:1168:            <ChartSkeleton title="Top 10 UFs Destino (Receita)" />
+frontend\src\pages\Dashboard.tsx:1169:            <ChartSkeleton title="Top 10 NCM (Receita)" />
+frontend\src\pages\Dashboard.tsx:1170:            <ChartSkeleton title="Top 10 CFOP (Receita)" />
+frontend\src\pages\Dashboard.tsx:1174:            <div className="grid gap-4 md:grid-cols-4 mt-4">
+frontend\src\pages\Dashboard.tsx:1175:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1176:                <div className="text-xs text-slate-500">Produtos distintos</div>
+frontend\src\pages\Dashboard.tsx:1177:                <div className="text-lg font-semibold mt-1">{breakdowns.distinct.produtos}</div>
+frontend\src\pages\Dashboard.tsx:1180:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1181:                <div className="text-xs text-slate-500">NCM distintos</div>
+frontend\src\pages\Dashboard.tsx:1182:                <div className="text-lg font-semibold mt-1">{breakdowns.distinct.ncm}</div>
+frontend\src\pages\Dashboard.tsx:1185:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1186:                <div className="text-xs text-slate-500">CFOP distintos</div>
+frontend\src\pages\Dashboard.tsx:1187:                <div className="text-lg font-semibold mt-1">{breakdowns.distinct.cfop}</div>
+frontend\src\pages\Dashboard.tsx:1190:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1191:                <div className="text-xs text-slate-500">Ticket médio (aprox.)</div>
+frontend\src\pages\Dashboard.tsx:1192:                <div className="text-lg font-semibold mt-1">
+frontend\src\pages\Dashboard.tsx:1198:            <div className="grid gap-4 lg:grid-cols-2 mt-6">
+frontend\src\pages\Dashboard.tsx:1199:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1200:                <div className="font-semibold text-slate-700 mb-2">Top 10 Produtos (Receita)</div>
+frontend\src\pages\Dashboard.tsx:1201:                <div className="h-[260px]">
+frontend\src\pages\Dashboard.tsx:1202:                  <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1204:                      data={breakdowns.top_produtos}
+frontend\src\pages\Dashboard.tsx:1205:                      layout="vertical"
+frontend\src\pages\Dashboard.tsx:1206:                      margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
+frontend\src\pages\Dashboard.tsx:1208:                      <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1209:                      <XAxis type="number" tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1211:                        type="category"
+frontend\src\pages\Dashboard.tsx:1212:                        dataKey="key"
+frontend\src\pages\Dashboard.tsx:1213:                        width={95}
+frontend\src\pages\Dashboard.tsx:1214:                        tick={{ fontSize: 11 }}
+frontend\src\pages\Dashboard.tsx:1215:                        tickMargin={4}
+frontend\src\pages\Dashboard.tsx:1216:                        tickFormatter={(v) => truncateLabel(v, 14)}
+frontend\src\pages\Dashboard.tsx:1218:                      <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1219:                      <Bar dataKey="value" name="Receita" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1225:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1226:                <div className="font-semibold text-slate-700 mb-2">Top 10 UFs Destino (Receita)</div>
+frontend\src\pages\Dashboard.tsx:1227:                <div className="h-[260px]">
+frontend\src\pages\Dashboard.tsx:1228:                  <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1230:                      data={breakdowns.top_uf_destino}
+frontend\src\pages\Dashboard.tsx:1231:                      layout="vertical"
+frontend\src\pages\Dashboard.tsx:1232:                      margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
+frontend\src\pages\Dashboard.tsx:1234:                      <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1235:                      <XAxis type="number" tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1236:                      <YAxis type="category" dataKey="key" width={70} tick={{ fontSize: 11 }} tickMargin={4} />
+frontend\src\pages\Dashboard.tsx:1237:                      <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1238:                      <Bar dataKey="value" name="Receita" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1244:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1245:                <div className="font-semibold text-slate-700 mb-2">Top 10 NCM (Receita)</div>
+frontend\src\pages\Dashboard.tsx:1246:                <div className="h-[260px]">
+frontend\src\pages\Dashboard.tsx:1247:                  <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1249:                      data={breakdowns.top_ncm}
+frontend\src\pages\Dashboard.tsx:1250:                      layout="vertical"
+frontend\src\pages\Dashboard.tsx:1251:                      margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
+frontend\src\pages\Dashboard.tsx:1253:                      <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1254:                      <XAxis type="number" tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1255:                      <YAxis type="category" dataKey="key" width={70} tick={{ fontSize: 11 }} tickMargin={4} />
+frontend\src\pages\Dashboard.tsx:1256:                      <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1257:                      <Bar dataKey="value" name="Receita" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1263:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1264:                <div className="font-semibold text-slate-700 mb-2">Top 10 CFOP (Receita)</div>
+frontend\src\pages\Dashboard.tsx:1265:                <div className="h-[260px]">
+frontend\src\pages\Dashboard.tsx:1266:                  <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1268:                      data={breakdowns.top_cfop}
+frontend\src\pages\Dashboard.tsx:1269:                      layout="vertical"
+frontend\src\pages\Dashboard.tsx:1270:                      margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
+frontend\src\pages\Dashboard.tsx:1272:                      <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1273:                      <XAxis type="number" tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1274:                      <YAxis type="category" dataKey="key" width={60} tick={{ fontSize: 11 }} tickMargin={4} />
+frontend\src\pages\Dashboard.tsx:1275:                      <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1276:                      <Bar dataKey="value" name="Receita" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1283:            <div className="border rounded-lg p-4 mt-6">
+frontend\src\pages\Dashboard.tsx:1284:              <div className="font-semibold text-slate-700 mb-2">Receita por Movimento</div>
+frontend\src\pages\Dashboard.tsx:1285:              <div className="h-[220px]">
+frontend\src\pages\Dashboard.tsx:1286:                <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1287:                  <BarChart data={breakdowns.movimento} margin={{ top: 8, right: 12, left: 0, bottom: 8 }}>
+frontend\src\pages\Dashboard.tsx:1288:                    <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1289:                    <XAxis dataKey="key" tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1290:                    <YAxis width={90} tickMargin={6} tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1291:                    <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1292:                    <Bar dataKey="value" name="Receita" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1299:          <div className="text-sm text-slate-500 mt-4">Sem dados de breakdown para o recorte atual.</div>
+frontend\src\pages\Dashboard.tsx:1305:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1306:          <SectionTitle title="Resumo do recorte" subtitle="Métricas auxiliares para validação rápida." />
+frontend\src\pages\Dashboard.tsx:1307:          <div className="grid gap-4 md:grid-cols-4 mt-4">
+frontend\src\pages\Dashboard.tsx:1308:            {summaryCards.map((c) => (
+frontend\src\pages\Dashboard.tsx:1309:              <div key={c.label} className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1310:                <div className="text-xs text-slate-500 mb-1">{c.label}</div>
+frontend\src\pages\Dashboard.tsx:1311:                <div className="text-sm font-semibold">{c.value}</div>
+frontend\src\pages\Dashboard.tsx:1320:        <div className="grid gap-6 lg:grid-cols-2">
+frontend\src\pages\Dashboard.tsx:1321:          <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1322:            <SectionTitle title="Receita por período" subtitle="Base: vprod" />
+frontend\src\pages\Dashboard.tsx:1323:            <div className="h-[300px] mt-3">
+frontend\src\pages\Dashboard.tsx:1324:              <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1325:                <LineChart data={series} margin={{ top: 8, right: 12, left: 44, bottom: 8 }}>
+frontend\src\pages\Dashboard.tsx:1326:                  <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1327:                  <XAxis dataKey="period" minTickGap={24} />
+frontend\src\pages\Dashboard.tsx:1328:                  <YAxis width={96} tickMargin={8} tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1329:                  <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1332:                    type="monotone"
+frontend\src\pages\Dashboard.tsx:1333:                    dataKey="receita"
+frontend\src\pages\Dashboard.tsx:1334:                    name="Receita"
+frontend\src\pages\Dashboard.tsx:1335:                    strokeWidth={2}
+frontend\src\pages\Dashboard.tsx:1336:                    dot={false}
+frontend\src\pages\Dashboard.tsx:1337:                    isAnimationActive={false}
+frontend\src\pages\Dashboard.tsx:1344:          <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1345:            <SectionTitle title="Tributos por período" subtitle="ICMS, PIS, COFINS (empilhado)" />
+frontend\src\pages\Dashboard.tsx:1346:            <div className="h-[300px] mt-3">
+frontend\src\pages\Dashboard.tsx:1347:              <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1348:                <BarChart data={series} margin={{ top: 8, right: 12, left: 44, bottom: 8 }}>
+frontend\src\pages\Dashboard.tsx:1349:                  <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1350:                  <XAxis dataKey="period" />
+frontend\src\pages\Dashboard.tsx:1352:                  <YAxis width={96} tickMargin={8} tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1353:                  <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1355:                  <Bar dataKey="icms" name="ICMS" stackId="t" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1356:                  <Bar dataKey="pis" name="PIS" stackId="t" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1357:                  <Bar dataKey="cofins" name="COFINS" stackId="t" isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1361:            <div className="text-xs text-slate-500 mt-2">Observação: no MVP, “carga atual” = ICMS + PIS + COFINS.</div>
+frontend\src\pages\Dashboard.tsx:1367:      <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Dashboard.tsx:1369:          title="Comparativo Reforma"
+frontend\src\pages\Dashboard.tsx:1370:          subtitle="Selecione o ano do cronograma (2026–2033) para simular CBS/IBS no recorte."
+frontend\src\pages\Dashboard.tsx:1371:          right={
+frontend\src\pages\Dashboard.tsx:1372:            <div className="flex items-center gap-2">
+frontend\src\pages\Dashboard.tsx:1374:                className="border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Dashboard.tsx:1375:                value={anoReforma}
+frontend\src\pages\Dashboard.tsx:1376:                onChange={(e) => {
+frontend\src\pages\Dashboard.tsx:1377:                  const y = Number(e.target.value);
+frontend\src\pages\Dashboard.tsx:1382:                {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
+frontend\src\pages\Dashboard.tsx:1383:                  <option key={y} value={y}>
+frontend\src\pages\Dashboard.tsx:1390:                onClick={() => loadAll(anoReforma, appliedFilters)}
+frontend\src\pages\Dashboard.tsx:1391:                disabled={compareLoading}
+frontend\src\pages\Dashboard.tsx:1392:                className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-60"
+frontend\src\pages\Dashboard.tsx:1402:          <div className="grid gap-4 md:grid-cols-4 mt-4">
+frontend\src\pages\Dashboard.tsx:1411:          <div className="grid gap-4 md:grid-cols-4 mt-4">
+frontend\src\pages\Dashboard.tsx:1412:            <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Dashboard.tsx:1413:              <div className="text-xs text-slate-500">Carga atual</div>
+frontend\src\pages\Dashboard.tsx:1414:              <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(compare.kpis.carga_atual_total)}</div>
+frontend\src\pages\Dashboard.tsx:1417:            <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Dashboard.tsx:1418:              <div className="text-xs text-slate-500">Carga reforma ({compare.kpis.ano_reforma})</div>
+frontend\src\pages\Dashboard.tsx:1419:              <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(compare.kpis.carga_reforma_total)}</div>
+frontend\src\pages\Dashboard.tsx:1422:            <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Dashboard.tsx:1423:              <div className="text-xs text-slate-500">Diferença (R$)</div>
+frontend\src\pages\Dashboard.tsx:1424:              <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(compare.kpis.diferenca_absoluta)}</div>
+frontend\src\pages\Dashboard.tsx:1427:            <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Dashboard.tsx:1428:              <div className="text-xs text-slate-500">Diferença (%)</div>
+frontend\src\pages\Dashboard.tsx:1429:              <div className="text-xl font-semibold text-slate-900 mt-1">{formatPercentBR(compare.kpis.diferenca_percentual)}</div>
+frontend\src\pages\Dashboard.tsx:1437:        <div className="grid gap-6 lg:grid-cols-2">
+frontend\src\pages\Dashboard.tsx:1438:          <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1439:            <SectionTitle title="Carga por período — Atual vs Reforma" subtitle={`Ano reforma: ${anoReforma}`} />
+frontend\src\pages\Dashboard.tsx:1440:            <div className="h-[300px] mt-3">
+frontend\src\pages\Dashboard.tsx:1441:              <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Dashboard.tsx:1442:                <LineChart data={compareSeries} margin={{ top: 8, right: 12, left: 44, bottom: 8 }}>
+frontend\src\pages\Dashboard.tsx:1443:                  <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Dashboard.tsx:1444:                  <XAxis dataKey="period" minTickGap={24} />
+frontend\src\pages\Dashboard.tsx:1445:                  <YAxis width={96} tickMargin={8} tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Dashboard.tsx:1446:                  <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Dashboard.tsx:1448:                  <Line type="monotone" dataKey="atual" name="Atual" strokeWidth={2} dot={false} isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1449:                  <Line type="monotone" dataKey="reforma" name="Reforma" strokeWidth={2} dot={false} isAnimationActive={false} />
+frontend\src\pages\Dashboard.tsx:1453:            <div className="text-xs text-slate-500 mt-2">Observação: no MVP, CBS/IBS estão calculados sobre a receita do período.</div>
+frontend\src\pages\Dashboard.tsx:1456:          <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1457:            <SectionTitle title="Detalhes por tributo — Atual vs Reforma" subtitle="Decomposição dos totais." />
+frontend\src\pages\Dashboard.tsx:1458:            <div className="border rounded-lg overflow-auto mt-3">
+frontend\src\pages\Dashboard.tsx:1459:              <table className="min-w-[640px] w-full text-sm border-collapse">
+frontend\src\pages\Dashboard.tsx:1461:                  <tr className="bg-slate-50">
+frontend\src\pages\Dashboard.tsx:1462:                    <th className="border px-2 py-2 text-left">Tributo</th>
+frontend\src\pages\Dashboard.tsx:1463:                    <th className="border px-2 py-2 text-right">Atual</th>
+frontend\src\pages\Dashboard.tsx:1464:                    <th className="border px-2 py-2 text-right">Reforma</th>
+frontend\src\pages\Dashboard.tsx:1465:                    <th className="border px-2 py-2 text-right">Dif.</th>
+frontend\src\pages\Dashboard.tsx:1469:                  {compareDetalhes.map((d) => (
+frontend\src\pages\Dashboard.tsx:1470:                    <tr key={d.tributo}>
+frontend\src\pages\Dashboard.tsx:1471:                      <td className="border px-2 py-2">{d.tributo}</td>
+frontend\src\pages\Dashboard.tsx:1472:                      <td className="border px-2 py-2 text-right">{formatMoneyBR(d.atual)}</td>
+frontend\src\pages\Dashboard.tsx:1473:                      <td className="border px-2 py-2 text-right">{formatMoneyBR(d.reforma)}</td>
+frontend\src\pages\Dashboard.tsx:1474:                      <td className="border px-2 py-2 text-right">{formatMoneyBR(d.dif)}</td>
+frontend\src\pages\Dashboard.tsx:1477:                  {compareDetalhes.length === 0 && (
+frontend\src\pages\Dashboard.tsx:1479:                      <td className="border px-2 py-3 text-slate-500" colSpan={4}>
+frontend\src\pages\Dashboard.tsx:1488:            <div className="text-xs text-slate-500 mt-2">Para 2027+: PIS/COFINS ficam 0 no MVP (transição simplificada).</div>
+frontend\src\pages\Dashboard.tsx:1494:      <div className="grid gap-4 lg:grid-cols-2">
+frontend\src\pages\Dashboard.tsx:1496:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1497:          <SectionTitle title="Créditos (não cumulatividade)" subtitle="Crédito gerado, glosa, apropriado e saldo a apropriar." />
+frontend\src\pages\Dashboard.tsx:1500:            <div className="mt-4 text-sm text-slate-500">Carregando...</div>
+frontend\src\pages\Dashboard.tsx:1502:            <div className="mt-4 text-sm text-red-600">{simV4Err}</div>
+frontend\src\pages\Dashboard.tsx:1504:            <div className="mt-4 grid gap-3 md:grid-cols-2">
+frontend\src\pages\Dashboard.tsx:1505:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1506:                <div className="text-xs text-slate-500">Crédito gerado</div>
+frontend\src\pages\Dashboard.tsx:1507:                <div className="text-lg font-semibold mt-1">{formatMoneyBR(simV4.credit_ledger.summary.credito_gerado)}</div>
+frontend\src\pages\Dashboard.tsx:1509:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1510:                <div className="text-xs text-slate-500">Glosa</div>
+frontend\src\pages\Dashboard.tsx:1511:                <div className="text-lg font-semibold mt-1">{formatMoneyBR(simV4.credit_ledger.summary.glosa)}</div>
+frontend\src\pages\Dashboard.tsx:1513:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1514:                <div className="text-xs text-slate-500">Crédito apropriado</div>
+frontend\src\pages\Dashboard.tsx:1515:                <div className="text-lg font-semibold mt-1">{formatMoneyBR(simV4.credit_ledger.summary.credito_apropriado)}</div>
+frontend\src\pages\Dashboard.tsx:1517:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1518:                <div className="text-xs text-slate-500">Saldo a apropriar</div>
+frontend\src\pages\Dashboard.tsx:1519:                <div className="text-lg font-semibold mt-1">{formatMoneyBR(simV4.credit_ledger.summary.saldo_a_apropriar)}</div>
+frontend\src\pages\Dashboard.tsx:1523:            <div className="mt-4 text-sm text-slate-500">Sem dados de crédito para o recorte atual.</div>
+frontend\src\pages\Dashboard.tsx:1528:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Dashboard.tsx:1529:          <SectionTitle title="Caixa e split payment" subtitle="Simulação de caixa (competência vs caixa), split e residual." />
+frontend\src\pages\Dashboard.tsx:1532:            <div className="mt-4 text-sm text-slate-500">Carregando...</div>
+frontend\src\pages\Dashboard.tsx:1534:            <div className="mt-4 text-sm text-red-600">{simV4Err}</div>
+frontend\src\pages\Dashboard.tsx:1536:            <div className="mt-4 grid gap-3 md:grid-cols-2">
+frontend\src\pages\Dashboard.tsx:1537:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1538:                <div className="text-xs text-slate-500">Total caixa</div>
+frontend\src\pages\Dashboard.tsx:1539:                <div className="text-lg font-semibold mt-1">{formatMoneyBR(simV4.cash_ledger.summary.total_caixa)}</div>
+frontend\src\pages\Dashboard.tsx:1542:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1543:                <div className="text-xs text-slate-500">Split</div>
+frontend\src\pages\Dashboard.tsx:1544:                <div className="text-lg font-semibold mt-1">
+frontend\src\pages\Dashboard.tsx:1549:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1550:                <div className="text-xs text-slate-500">Total residual</div>
+frontend\src\pages\Dashboard.tsx:1551:                <div className="text-lg font-semibold mt-1">{formatMoneyBR(simV4.cash_ledger.summary.total_residual)}</div>
+frontend\src\pages\Dashboard.tsx:1554:              <div className="border rounded-lg p-4">
+frontend\src\pages\Dashboard.tsx:1555:                <div className="text-xs text-slate-500">Pico de caixa</div>
+frontend\src\pages\Dashboard.tsx:1556:                <div className="text-sm font-semibold mt-1">
+frontend\src\pages\Dashboard.tsx:1565:              <div className="md:col-span-2 text-xs text-slate-500">
+frontend\src\pages\Dashboard.tsx:1570:            <div className="mt-4 text-sm text-slate-500">Sem dados de caixa para o recorte atual.</div>
+frontend\src\pages\DataBase.tsx:4:type Summary = {
+frontend\src\pages\DataBase.tsx:18:type Status = {
+frontend\src\pages\DataBase.tsx:24:const REQUIRED_COLUMNS = [
+frontend\src\pages\DataBase.tsx:34:const API = "http://127.0.0.1:8000";
+frontend\src\pages\DataBase.tsx:36:export const DataBase: React.FC = () => {
+frontend\src\pages\DataBase.tsx:37:  const [status, setStatus] = useState<Status | null>(null);
+frontend\src\pages\DataBase.tsx:38:  const [summary, setSummary] = useState<Summary | null>(null);
+frontend\src\pages\DataBase.tsx:40:  const [file, setFile] = useState<File | null>(null);
+frontend\src\pages\DataBase.tsx:41:  const [loading, setLoading] = useState(false);
+frontend\src\pages\DataBase.tsx:42:  const [clearing, setClearing] = useState(false);
+frontend\src\pages\DataBase.tsx:43:  const [msg, setMsg] = useState<string | null>(null);
+frontend\src\pages\DataBase.tsx:45:  const [preview, setPreview] = useState<CsvPreview | null>(null);
+frontend\src\pages\DataBase.tsx:46:  const [validationMissing, setValidationMissing] = useState<string[]>([]);
+frontend\src\pages\DataBase.tsx:48:  const formatMoney = (v: number) => `R$ ${v.toFixed(2).replace(".", ",")}`;
+frontend\src\pages\DataBase.tsx:51:    const r = await fetch(`${API}/database/status`);
+frontend\src\pages\DataBase.tsx:52:    const data = (await r.json()) as Status;
+frontend\src\pages\DataBase.tsx:57:    const r = await fetch(`${API}/database/summary`);
+frontend\src\pages\DataBase.tsx:58:    const data = (await r.json()) as Summary;
+frontend\src\pages\DataBase.tsx:62:  useEffect(() => {
+frontend\src\pages\DataBase.tsx:68:    const r = await fetch(`${API}/database/template-csv`);
+frontend\src\pages\DataBase.tsx:74:    const blob = await r.blob();
+frontend\src\pages\DataBase.tsx:75:    const url = window.URL.createObjectURL(blob);
+frontend\src\pages\DataBase.tsx:77:    const a = document.createElement("a");
+frontend\src\pages\DataBase.tsx:78:    a.href = url;
+frontend\src\pages\DataBase.tsx:79:    a.download = "template_nfe_itens.csv";
+frontend\src\pages\DataBase.tsx:100:    const text = await f.text();
+frontend\src\pages\DataBase.tsx:101:    const pv = parseCsvPreview(text, 20);
+frontend\src\pages\DataBase.tsx:104:    const check = validateColumns(pv.header, REQUIRED_COLUMNS);
+frontend\src\pages\DataBase.tsx:126:      const form = new FormData();
+frontend\src\pages\DataBase.tsx:129:      const r = await fetch(`${API}/database/import-csv`, {
+frontend\src\pages\DataBase.tsx:135:        let detail = "Falha ao importar CSV";
+frontend\src\pages\DataBase.tsx:137:          const err = await r.json();
+frontend\src\pages\DataBase.tsx:138:          detail = err?.detail ?? detail;
+frontend\src\pages\DataBase.tsx:140:          const txt = await r.text();
+frontend\src\pages\DataBase.tsx:141:          if (txt) detail = txt;
+frontend\src\pages\DataBase.tsx:146:      const ok = await r.json();
+frontend\src\pages\DataBase.tsx:160:    const confirm = window.confirm(
+frontend\src\pages\DataBase.tsx:169:      const r = await fetch(`${API}/database/clear-dataset`, { method: "DELETE" });
+frontend\src\pages\DataBase.tsx:171:        let detail = "Falha ao limpar a base de dados";
+frontend\src\pages\DataBase.tsx:173:          const err = await r.json();
+frontend\src\pages\DataBase.tsx:174:          detail = err?.detail ?? detail;
+frontend\src\pages\DataBase.tsx:176:          const txt = await r.text();
+frontend\src\pages\DataBase.tsx:177:          if (txt) detail = txt;
+frontend\src\pages\DataBase.tsx:199:  const previewTable = useMemo(() => {
+frontend\src\pages\DataBase.tsx:200:    if (!preview || preview.header.length === 0) return null;
+frontend\src\pages\DataBase.tsx:203:      <div className="border rounded-lg overflow-auto">
+frontend\src\pages\DataBase.tsx:204:        <table className="min-w-[900px] w-full text-sm border-collapse">
+frontend\src\pages\DataBase.tsx:206:            <tr className="bg-slate-50">
+frontend\src\pages\DataBase.tsx:207:              {preview.header.map((h) => (
+frontend\src\pages\DataBase.tsx:208:                <th key={h} className="border px-2 py-1 text-left whitespace-nowrap">
+frontend\src\pages\DataBase.tsx:215:            {preview.rows.map((row, idx) => (
+frontend\src\pages\DataBase.tsx:216:              <tr key={idx}>
+frontend\src\pages\DataBase.tsx:217:                {preview.header.map((h) => (
+frontend\src\pages\DataBase.tsx:218:                  <td key={h} className="border px-2 py-1 whitespace-nowrap">
+frontend\src\pages\DataBase.tsx:224:            {preview.rows.length === 0 && (
+frontend\src\pages\DataBase.tsx:226:                <td className="border px-2 py-2 text-slate-500" colSpan={preview.header.length}>
+frontend\src\pages\DataBase.tsx:238:    <div className="space-y-6">
+frontend\src\pages\DataBase.tsx:240:        <h1 className="text-2xl font-semibold text-slate-800">Base de Dados</h1>
+frontend\src\pages\DataBase.tsx:241:        <p className="text-sm text-slate-500 mt-1">
+frontend\src\pages\DataBase.tsx:247:      <div className="bg-white rounded-xl shadow-sm p-6 space-y-3">
+frontend\src\pages\DataBase.tsx:248:        <h2 className="font-semibold text-slate-700">Ações</h2>
+frontend\src\pages\DataBase.tsx:250:          onClick={handleClearDatabase}
+frontend\src\pages\DataBase.tsx:251:          disabled={clearing}
+frontend\src\pages\DataBase.tsx:252:          className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium
+frontend\src\pages\DataBase.tsx:257:        <p className="text-xs text-slate-500">
+frontend\src\pages\DataBase.tsx:263:      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
+frontend\src\pages\DataBase.tsx:264:        <h2 className="font-semibold text-slate-700">Status</h2>
+frontend\src\pages\DataBase.tsx:265:        <div className="text-sm text-slate-700">
+frontend\src\pages\DataBase.tsx:270:              <div className="text-xs text-slate-400 break-all"><b>Arquivo:</b> {status.path}</div>
+frontend\src\pages\DataBase.tsx:279:      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
+frontend\src\pages\DataBase.tsx:280:        <h2 className="font-semibold text-slate-700">Resumo do dataset</h2>
+frontend\src\pages\DataBase.tsx:283:          <div className="text-sm text-slate-500">Carregando resumo...</div>
+frontend\src\pages\DataBase.tsx:285:          <div className="text-sm text-slate-600">
+frontend\src\pages\DataBase.tsx:290:            <div className="grid gap-4 md:grid-cols-4">
+frontend\src\pages\DataBase.tsx:291:              <div className="border rounded-lg p-4">
+frontend\src\pages\DataBase.tsx:292:                <div className="text-xs text-slate-500 mb-1">Período</div>
+frontend\src\pages\DataBase.tsx:293:                <div className="text-sm font-semibold">
+frontend\src\pages\DataBase.tsx:298:              <div className="border rounded-lg p-4">
+frontend\src\pages\DataBase.tsx:299:                <div className="text-xs text-slate-500 mb-1">Receita total</div>
+frontend\src\pages\DataBase.tsx:300:                <div className="text-sm font-semibold">{formatMoney(summary.receita_total)}</div>
+frontend\src\pages\DataBase.tsx:303:              <div className="border rounded-lg p-4">
+frontend\src\pages\DataBase.tsx:304:                <div className="text-xs text-slate-500 mb-1">UFs Origem</div>
+frontend\src\pages\DataBase.tsx:305:                <div className="text-sm font-semibold">{summary.ufs_origem.length}</div>
+frontend\src\pages\DataBase.tsx:308:              <div className="border rounded-lg p-4">
+frontend\src\pages\DataBase.tsx:309:                <div className="text-xs text-slate-500 mb-1">UFs Destino</div>
+frontend\src\pages\DataBase.tsx:310:                <div className="text-sm font-semibold">{summary.ufs_destino.length}</div>
+frontend\src\pages\DataBase.tsx:314:            <div className="text-sm text-slate-600 space-y-1">
+frontend\src\pages\DataBase.tsx:318:              <div className="pt-2">
+frontend\src\pages\DataBase.tsx:324:              <div className="text-xs text-slate-400 break-all pt-2">
+frontend\src\pages\DataBase.tsx:333:      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
+frontend\src\pages\DataBase.tsx:334:        <div className="flex items-center justify-between gap-3 flex-wrap">
+frontend\src\pages\DataBase.tsx:335:          <h2 className="font-semibold text-slate-700">Importar CSV</h2>
+frontend\src\pages\DataBase.tsx:338:            onClick={handleDownloadTemplate}
+frontend\src\pages\DataBase.tsx:339:            className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium
+frontend\src\pages\DataBase.tsx:346:        <div className="text-sm text-slate-600">
+frontend\src\pages\DataBase.tsx:352:          type="file"
+frontend\src\pages\DataBase.tsx:353:          accept=".csv"
+frontend\src\pages\DataBase.tsx:354:          onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)}
+frontend\src\pages\DataBase.tsx:355:          className="block w-full text-sm"
+frontend\src\pages\DataBase.tsx:359:          <div className="text-sm text-red-600">
+frontend\src\pages\DataBase.tsx:365:          onClick={handleUpload}
+frontend\src\pages\DataBase.tsx:366:          disabled={loading || !file || validationMissing.length > 0}
+frontend\src\pages\DataBase.tsx:367:          className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium
+frontend\src\pages\DataBase.tsx:373:        {msg && <p className="text-sm text-slate-700">{msg}</p>}
+frontend\src\pages\DataBase.tsx:378:        <div className="bg-white rounded-xl shadow-sm p-6 space-y-3">
+frontend\src\pages\DataBase.tsx:379:          <h2 className="font-semibold text-slate-700">Pré-visualização (até 20 linhas)</h2>
+frontend\src\pages\DataBase.tsx:380:          <p className="text-sm text-slate-500">
+frontend\src\pages\Scenarios.tsx:3:export const Scenarios: React.FC = () => {
+frontend\src\pages\Scenarios.tsx:5:    <div className="space-y-4">
+frontend\src\pages\Scenarios.tsx:6:      <div className="flex items-center justify-between">
+frontend\src\pages\Scenarios.tsx:7:        <h3 className="text-base font-semibold text-slate-800">Cenários</h3>
+frontend\src\pages\Scenarios.tsx:8:        <button className="px-3 py-1.5 text-sm rounded-md bg-slate-900 text-white">
+frontend\src\pages\Scenarios.tsx:13:      <div className="bg-white rounded-xl shadow-sm p-4">
+frontend\src\pages\Scenarios.tsx:14:        <table className="w-full text-xs text-left">
+frontend\src\pages\Scenarios.tsx:15:          <thead className="bg-slate-50">
+frontend\src\pages\Scenarios.tsx:17:              <th className="px-2 py-2">Nome</th>
+frontend\src\pages\Scenarios.tsx:18:              <th className="px-2 py-2">Tipo</th>
+frontend\src\pages\Scenarios.tsx:19:              <th className="px-2 py-2">Atualizado em</th>
+frontend\src\pages\Scenarios.tsx:20:              <th className="px-2 py-2">Ações</th>
+frontend\src\pages\Scenarios.tsx:24:            <tr className="border-t">
+frontend\src\pages\Scenarios.tsx:25:              <td className="px-2 py-2 text-slate-700">Cenário Base</td>
+frontend\src\pages\Scenarios.tsx:26:              <td className="px-2 py-2">OFICIAL</td>
+frontend\src\pages\Scenarios.tsx:27:              <td className="px-2 py-2">-</td>
+frontend\src\pages\Scenarios.tsx:28:              <td className="px-2 py-2 space-x-2">
+frontend\src\pages\Scenarios.tsx:29:                <button className="text-xs text-slate-700 underline">
+frontend\src\pages\Scenarios.tsx:32:                <button className="text-xs text-slate-700 underline">
+frontend\src\pages\Scenarios.tsx:35:                <button className="text-xs text-red-500 underline">
+frontend\src\pages\Settings.tsx:3:export const Settings: React.FC = () => {
+frontend\src\pages\Settings.tsx:5:    <div className="space-y-4">
+frontend\src\pages\Settings.tsx:6:      <h3 className="text-base font-semibold text-slate-800">Configurações</h3>
+frontend\src\pages\Settings.tsx:7:      <p className="text-xs text-slate-500">
+frontend\src\pages\Settings.tsx:11:      <div className="bg-white rounded-xl shadow-sm p-4 text-xs text-slate-600">
+frontend\src\pages\Settings.tsx:14:          implementadas. Assim que a API e as regras estiverem mais maduras,
+frontend\src\pages\Settings.tsx:17:        <ul className="list-disc list-inside mt-2 space-y-1">
+frontend\src\pages\SimulacaoManual.tsx:7:} from "../simulacaoManualApi";
+frontend\src\pages\SimulacaoManual.tsx:9:const initialForm: SimulacaoManualPayload = {
+frontend\src\pages\SimulacaoManual.tsx:33:export const SimulacaoManual: React.FC = () => {
+frontend\src\pages\SimulacaoManual.tsx:34:  const [form, setForm] = useState<SimulacaoManualPayload>(initialForm);
+frontend\src\pages\SimulacaoManual.tsx:35:  const [loading, setLoading] = useState(false);
+frontend\src\pages\SimulacaoManual.tsx:36:  const [result, setResult] = useState<SimulacaoManualResponse | null>(null);
+frontend\src\pages\SimulacaoManual.tsx:37:  const [error, setError] = useState<string | null>(null);
+frontend\src\pages\SimulacaoManual.tsx:40:    const { name, value } = e.target;
+frontend\src\pages\SimulacaoManual.tsx:42:    const numberFields: (keyof SimulacaoManualPayload)[] = [
+frontend\src\pages\SimulacaoManual.tsx:54:      const num = value === "" ? 0 : Number(value);
+frontend\src\pages\SimulacaoManual.tsx:55:      setForm((prev) => ({ ...prev, [name]: Number.isFinite(num) ? num : 0 } as any));
+frontend\src\pages\SimulacaoManual.tsx:59:    const nullableFields: (keyof SimulacaoManualPayload)[] = [
+frontend\src\pages\SimulacaoManual.tsx:67:      setForm((prev) => ({ ...prev, [name]: value.trim() === "" ? null : value } as any));
+frontend\src\pages\SimulacaoManual.tsx:71:    setForm((prev) => ({ ...prev, [name]: value } as any));
+frontend\src\pages\SimulacaoManual.tsx:78:      const data = await simularManual(form);
+frontend\src\pages\SimulacaoManual.tsx:89:  const detalhes = useMemo(() => {
+frontend\src\pages\SimulacaoManual.tsx:101:    <div className="space-y-6">
+frontend\src\pages\SimulacaoManual.tsx:103:        <h1 className="text-2xl font-semibold text-slate-800">
+frontend\src\pages\SimulacaoManual.tsx:106:        <p className="text-sm text-slate-500 mt-1">
+frontend\src\pages\SimulacaoManual.tsx:111:      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
+frontend\src\pages\SimulacaoManual.tsx:112:        <h2 className="font-semibold text-slate-700">Parâmetros</h2>
+frontend\src\pages\SimulacaoManual.tsx:114:        <div className="grid gap-4 md:grid-cols-3">
+frontend\src\pages\SimulacaoManual.tsx:116:            <label className="block text-sm text-slate-600 mb-1">Ano</label>
+frontend\src\pages\SimulacaoManual.tsx:118:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:119:              name="ano"
+frontend\src\pages\SimulacaoManual.tsx:120:              min={2026}
+frontend\src\pages\SimulacaoManual.tsx:121:              max={2033}
+frontend\src\pages\SimulacaoManual.tsx:122:              value={form.ano}
+frontend\src\pages\SimulacaoManual.tsx:123:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:124:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:129:            <label className="block text-sm text-slate-600 mb-1">Valor do produto (R$)</label>
+frontend\src\pages\SimulacaoManual.tsx:131:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:132:              name="valor_produto"
+frontend\src\pages\SimulacaoManual.tsx:133:              value={form.valor_produto}
+frontend\src\pages\SimulacaoManual.tsx:134:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:135:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:140:            <label className="block text-sm text-slate-600 mb-1">BC ICMS (R$)</label>
+frontend\src\pages\SimulacaoManual.tsx:142:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:143:              name="bc_icms"
+frontend\src\pages\SimulacaoManual.tsx:144:              value={form.bc_icms}
+frontend\src\pages\SimulacaoManual.tsx:145:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:146:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:151:            <label className="block text-sm text-slate-600 mb-1">BC PIS (R$)</label>
+frontend\src\pages\SimulacaoManual.tsx:153:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:154:              name="bc_pis"
+frontend\src\pages\SimulacaoManual.tsx:155:              value={form.bc_pis}
+frontend\src\pages\SimulacaoManual.tsx:156:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:157:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:162:            <label className="block text-sm text-slate-600 mb-1">BC COFINS (R$)</label>
+frontend\src\pages\SimulacaoManual.tsx:164:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:165:              name="bc_cofins"
+frontend\src\pages\SimulacaoManual.tsx:166:              value={form.bc_cofins}
+frontend\src\pages\SimulacaoManual.tsx:167:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:168:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:173:            <label className="block text-sm text-slate-600 mb-1">Alíquota ICMS (decimal)</label>
+frontend\src\pages\SimulacaoManual.tsx:175:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:176:              step="0.0001"
+frontend\src\pages\SimulacaoManual.tsx:177:              name="aliq_icms_atual"
+frontend\src\pages\SimulacaoManual.tsx:178:              value={form.aliq_icms_atual}
+frontend\src\pages\SimulacaoManual.tsx:179:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:180:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:185:            <label className="block text-sm text-slate-600 mb-1">Alíquota PIS (decimal)</label>
+frontend\src\pages\SimulacaoManual.tsx:187:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:188:              step="0.0001"
+frontend\src\pages\SimulacaoManual.tsx:189:              name="aliq_pis_atual"
+frontend\src\pages\SimulacaoManual.tsx:190:              value={form.aliq_pis_atual}
+frontend\src\pages\SimulacaoManual.tsx:191:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:192:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:197:            <label className="block text-sm text-slate-600 mb-1">Alíquota COFINS (decimal)</label>
+frontend\src\pages\SimulacaoManual.tsx:199:              type="number"
+frontend\src\pages\SimulacaoManual.tsx:200:              step="0.0001"
+frontend\src\pages\SimulacaoManual.tsx:201:              name="aliq_cofins_atual"
+frontend\src\pages\SimulacaoManual.tsx:202:              value={form.aliq_cofins_atual}
+frontend\src\pages\SimulacaoManual.tsx:203:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:204:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:209:            <label className="block text-sm text-slate-600 mb-1">UF Origem</label>
+frontend\src\pages\SimulacaoManual.tsx:211:              name="uf_origem"
+frontend\src\pages\SimulacaoManual.tsx:212:              value={form.uf_origem}
+frontend\src\pages\SimulacaoManual.tsx:213:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:214:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:219:            <label className="block text-sm text-slate-600 mb-1">UF Destino</label>
+frontend\src\pages\SimulacaoManual.tsx:221:              name="uf_destino"
+frontend\src\pages\SimulacaoManual.tsx:222:              value={form.uf_destino}
+frontend\src\pages\SimulacaoManual.tsx:223:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:224:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:229:            <label className="block text-sm text-slate-600 mb-1">NCM (opcional)</label>
+frontend\src\pages\SimulacaoManual.tsx:231:              name="ncm"
+frontend\src\pages\SimulacaoManual.tsx:232:              value={form.ncm ?? ""}
+frontend\src\pages\SimulacaoManual.tsx:233:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:234:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:239:            <label className="block text-sm text-slate-600 mb-1">CFOP (opcional)</label>
+frontend\src\pages\SimulacaoManual.tsx:241:              name="cfop"
+frontend\src\pages\SimulacaoManual.tsx:242:              value={form.cfop ?? ""}
+frontend\src\pages\SimulacaoManual.tsx:243:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:244:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:249:            <label className="block text-sm text-slate-600 mb-1">Movimento (opcional)</label>
+frontend\src\pages\SimulacaoManual.tsx:251:              name="movimento"
+frontend\src\pages\SimulacaoManual.tsx:252:              value={form.movimento ?? ""}
+frontend\src\pages\SimulacaoManual.tsx:253:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:254:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:258:          <div className="md:col-span-3">
+frontend\src\pages\SimulacaoManual.tsx:259:            <label className="block text-sm text-slate-600 mb-1">Produto (opcional)</label>
+frontend\src\pages\SimulacaoManual.tsx:261:              name="produto"
+frontend\src\pages\SimulacaoManual.tsx:262:              value={form.produto ?? ""}
+frontend\src\pages\SimulacaoManual.tsx:263:              onChange={handleChange}
+frontend\src\pages\SimulacaoManual.tsx:264:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\SimulacaoManual.tsx:270:          onClick={handleSimular}
+frontend\src\pages\SimulacaoManual.tsx:271:          disabled={loading}
+frontend\src\pages\SimulacaoManual.tsx:272:          className="mt-2 inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60"
+frontend\src\pages\SimulacaoManual.tsx:277:        {error && <p className="text-sm text-red-600">{error}</p>}
+frontend\src\pages\SimulacaoManual.tsx:281:        <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+frontend\src\pages\SimulacaoManual.tsx:282:          <h2 className="font-semibold text-slate-700">Resultado — Ano {result.ano}</h2>
+frontend\src\pages\SimulacaoManual.tsx:284:          <div className="grid gap-4 md:grid-cols-4">
+frontend\src\pages\SimulacaoManual.tsx:285:            <div className="border rounded-lg p-4">
+frontend\src\pages\SimulacaoManual.tsx:286:              <div className="text-xs text-slate-500 mb-1">Carga atual</div>
+frontend\src\pages\SimulacaoManual.tsx:287:              <div className="text-lg font-semibold">{money(result.carga_total_atual)}</div>
+frontend\src\pages\SimulacaoManual.tsx:290:            <div className="border rounded-lg p-4">
+frontend\src\pages\SimulacaoManual.tsx:291:              <div className="text-xs text-slate-500 mb-1">Carga reforma</div>
+frontend\src\pages\SimulacaoManual.tsx:292:              <div className="text-lg font-semibold">{money(result.carga_total_reforma)}</div>
+frontend\src\pages\SimulacaoManual.tsx:295:            <div className="border rounded-lg p-4">
+frontend\src\pages\SimulacaoManual.tsx:296:              <div className="text-xs text-slate-500 mb-1">Diferença absoluta</div>
+frontend\src\pages\SimulacaoManual.tsx:297:              <div className="text-lg font-semibold">{money(result.diferenca_absoluta)}</div>
+frontend\src\pages\SimulacaoManual.tsx:300:            <div className="border rounded-lg p-4">
+frontend\src\pages\SimulacaoManual.tsx:301:              <div className="text-xs text-slate-500 mb-1">Diferença percentual</div>
+frontend\src\pages\SimulacaoManual.tsx:302:              <div className="text-lg font-semibold">{percent(result.diferenca_percentual)}</div>
+frontend\src\pages\SimulacaoManual.tsx:307:            <h3 className="font-semibold text-slate-700 mb-2">Detalhamento</h3>
+frontend\src\pages\SimulacaoManual.tsx:308:            <table className="w-full text-sm border-collapse">
+frontend\src\pages\SimulacaoManual.tsx:310:                <tr className="bg-slate-50">
+frontend\src\pages\SimulacaoManual.tsx:311:                  <th className="border px-2 py-1 text-left">Tributo</th>
+frontend\src\pages\SimulacaoManual.tsx:312:                  <th className="border px-2 py-1 text-right">Atual</th>
+frontend\src\pages\SimulacaoManual.tsx:313:                  <th className="border px-2 py-1 text-right">Reforma</th>
+frontend\src\pages\SimulacaoManual.tsx:317:                {detalhes.map((d) => (
+frontend\src\pages\SimulacaoManual.tsx:318:                  <tr key={d.tributo}>
+frontend\src\pages\SimulacaoManual.tsx:319:                    <td className="border px-2 py-1">{d.tributo}</td>
+frontend\src\pages\SimulacaoManual.tsx:320:                    <td className="border px-2 py-1 text-right">{money(d.atual)}</td>
+frontend\src\pages\SimulacaoManual.tsx:321:                    <td className="border px-2 py-1 text-right">{money(d.reforma)}</td>
+frontend\src\pages\Simulator.tsx:13:const API = "http://127.0.0.1:8000";
+frontend\src\pages\Simulator.tsx:15:/** =========================
+frontend\src\pages\Simulator.tsx:17: * ========================= */
+frontend\src\pages\Simulator.tsx:18:type CreditLedgerSummary = {
+frontend\src\pages\Simulator.tsx:26:type CreditLedgerByFinalidadeItem = {
+frontend\src\pages\Simulator.tsx:33:type CreditLedgerSeriesPoint = {
+frontend\src\pages\Simulator.tsx:38:type CreditLedger = {
+frontend\src\pages\Simulator.tsx:44:type SimulatorFilters = {
+frontend\src\pages\Simulator.tsx:57:type SimulatorPageProps = {
+frontend\src\pages\Simulator.tsx:63:type BreakdownItem = { key: string; value: number };
+frontend\src\pages\Simulator.tsx:65:type FinalidadeItem = {
+frontend\src\pages\Simulator.tsx:74:type SeriesPointV4 = {
+frontend\src\pages\Simulator.tsx:85:type CreditLedger = {
+frontend\src\pages\Simulator.tsx:90:type SimulatorV4Response = {
+frontend\src\pages\Simulator.tsx:120:/** =========================
+frontend\src\pages\Simulator.tsx:122: * ========================= */
+frontend\src\pages\Simulator.tsx:124:  const n = Number(v);
+frontend\src\pages\Simulator.tsx:128:const BRL = new Intl.NumberFormat("pt-BR", {
+frontend\src\pages\Simulator.tsx:138:const NUM0 = new Intl.NumberFormat("pt-BR", {
+frontend\src\pages\Simulator.tsx:147:  const usp = new URLSearchParams();
+frontend\src\pages\Simulator.tsx:148:  Object.entries(params).forEach(([k, v]) => {
+frontend\src\pages\Simulator.tsx:149:    if (v === undefined || v === null) return;
+frontend\src\pages\Simulator.tsx:150:    const s = String(v).trim();
+frontend\src\pages\Simulator.tsx:154:  const qs = usp.toString();
+frontend\src\pages\Simulator.tsx:158:const TooltipMoney: React.FC<any> = ({ active, payload, label }) => {
+frontend\src\pages\Simulator.tsx:162:    <div className="bg-white border rounded-lg shadow-sm px-3 py-2 text-xs text-slate-700">
+frontend\src\pages\Simulator.tsx:163:      <div className="font-semibold mb-1">{label}</div>
+frontend\src\pages\Simulator.tsx:164:      <div className="space-y-1">
+frontend\src\pages\Simulator.tsx:165:        {payload.map((p: any) => (
+frontend\src\pages\Simulator.tsx:166:          <div key={p.dataKey} className="flex justify-between gap-6">
+frontend\src\pages\Simulator.tsx:167:            <span className="text-slate-500">{p.name}</span>
+frontend\src\pages\Simulator.tsx:168:            <span className="font-semibold">{formatMoneyBR(safeNumber(p.value))}</span>
+frontend\src\pages\Simulator.tsx:178:    <div className="flex items-start justify-between gap-3 flex-wrap">
+frontend\src\pages\Simulator.tsx:180:        <h2 className="text-base font-semibold text-slate-800">{props.title}</h2>
+frontend\src\pages\Simulator.tsx:181:        {props.subtitle && <p className="text-xs text-slate-500 mt-1">{props.subtitle}</p>}
+frontend\src\pages\Simulator.tsx:183:      {props.right ? <div className="shrink-0">{props.right}</div> : null}
+frontend\src\pages\Simulator.tsx:190:    <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Simulator.tsx:191:      <div className="h-3 w-24 bg-slate-200 rounded mb-3" />
+frontend\src\pages\Simulator.tsx:192:      <div className="h-6 w-40 bg-slate-200 rounded" />
+frontend\src\pages\Simulator.tsx:197:/** =========================
+frontend\src\pages\Simulator.tsx:199: * ========================= */
+frontend\src\pages\Simulator.tsx:200:export const Simulator: React.FC<SimulatorPageProps> = ({
+frontend\src\pages\Simulator.tsx:201:  periodoInicio = "",
+frontend\src\pages\Simulator.tsx:202:  periodoFim = "",
+frontend\src\pages\Simulator.tsx:203:  applyToken = 0,
+frontend\src\pages\Simulator.tsx:204:}) => {
+frontend\src\pages\Simulator.tsx:205:  const abortRef = useRef<AbortController | null>(null);
+frontend\src\pages\Simulator.tsx:207:  const [data, setData] = useState<SimulatorV4Response | null>(null);
+frontend\src\pages\Simulator.tsx:208:  const [loading, setLoading] = useState(false);
+frontend\src\pages\Simulator.tsx:209:  const [err, setErr] = useState<string | null>(null);
+frontend\src\pages\Simulator.tsx:211:  const [filters, setFilters] = useState<SimulatorFilters>({
+frontend\src\pages\Simulator.tsx:224:  const [applied, setApplied] = useState<SimulatorFilters>({
+frontend\src\pages\Simulator.tsx:238:    const { name, value } = e.target;
+frontend\src\pages\Simulator.tsx:239:    setFilters((prev) => ({ ...prev, [name]: value }));
+frontend\src\pages\Simulator.tsx:244:    abortRef.current = new AbortController();
+frontend\src\pages\Simulator.tsx:245:    const { signal } = abortRef.current;
+frontend\src\pages\Simulator.tsx:251:      const qs = buildQuery({
+frontend\src\pages\Simulator.tsx:264:      const r = await fetch(`${API}/simulator/v4/run${qs}`, { signal });
+frontend\src\pages\Simulator.tsx:266:        const t = await r.text();
+frontend\src\pages\Simulator.tsx:270:      const json = (await r.json()) as SimulatorV4Response;
+frontend\src\pages\Simulator.tsx:273:      if (e?.name === "AbortError") return;
+frontend\src\pages\Simulator.tsx:283:    const pi = (filters.periodo_inicio || "").trim();
+frontend\src\pages\Simulator.tsx:284:    const pf = (filters.periodo_fim || "").trim();
+frontend\src\pages\Simulator.tsx:291:    const rj = (filters.regras_json || "").trim();
+frontend\src\pages\Simulator.tsx:294:        const obj = JSON.parse(rj);
+frontend\src\pages\Simulator.tsx:305:    const normalized: SimulatorFilters = {
+frontend\src\pages\Simulator.tsx:323:    const empty: SimulatorFilters = {
+frontend\src\pages\Simulator.tsx:341:  useEffect(() => {
+frontend\src\pages\Simulator.tsx:347:  useEffect(() => {
+frontend\src\pages\Simulator.tsx:351:  const cl = sim?.credit_ledger ?? null;
+frontend\src\pages\Simulator.tsx:353:    setFilters((prev) => ({
+frontend\src\pages\Simulator.tsx:359:    const nextApplied: SimulatorFilters = {
+frontend\src\pages\Simulator.tsx:370:  const hasBase = !!data?.status?.exists;
+frontend\src\pages\Simulator.tsx:372:  const kpiCards = useMemo(() => {
+frontend\src\pages\Simulator.tsx:374:    const rows = safeNumber(data.base?.rows);
+frontend\src\pages\Simulator.tsx:375:    if (rows <= 0) return null;
+frontend\src\pages\Simulator.tsx:386:  const chartSeries = useMemo(() => {
+frontend\src\pages\Simulator.tsx:387:    const ts = (data?.series ?? []).map((p) => ({
+frontend\src\pages\Simulator.tsx:401:const creditLedger = data?.credit_ledger ?? null;
+frontend\src\pages\Simulator.tsx:403:const creditSummary = creditLedger?.summary ?? null;
+frontend\src\pages\Simulator.tsx:405:const creditByFinalidade = React.useMemo(() => {
+frontend\src\pages\Simulator.tsx:406:  const obj = creditLedger?.by_finalidade ?? {};
+frontend\src\pages\Simulator.tsx:407:  if (!obj || typeof obj !== "object") return [];
+frontend\src\pages\Simulator.tsx:408:  return Object.entries(obj).map(([finalidade, v]: any) => ({
+frontend\src\pages\Simulator.tsx:417:const creditSeries = React.useMemo(() => {
+frontend\src\pages\Simulator.tsx:418:  const arr = creditLedger?.series ?? [];
+frontend\src\pages\Simulator.tsx:420:  return arr.map((p: any) => ({
+frontend\src\pages\Simulator.tsx:428:    <div className="w-full space-y-6">
+frontend\src\pages\Simulator.tsx:430:      <header className="flex items-start justify-between gap-3 flex-wrap">
+frontend\src\pages\Simulator.tsx:432:          <h1 className="text-2xl font-semibold text-slate-800">Simulador v4</h1>
+frontend\src\pages\Simulator.tsx:433:          <p className="text-sm text-slate-500 mt-1">
+frontend\src\pages\Simulator.tsx:439:          onClick={() => loadRun(applied)}
+frontend\src\pages\Simulator.tsx:440:          disabled={loading}
+frontend\src\pages\Simulator.tsx:441:          className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-60"
+frontend\src\pages\Simulator.tsx:448:      <div className="bg-white rounded-xl shadow-sm p-5 space-y-4">
+frontend\src\pages\Simulator.tsx:450:          title="Filtros (Simulador)"
+frontend\src\pages\Simulator.tsx:451:          subtitle="Use o período da Topbar ou ajuste filtros específicos aqui."
+frontend\src\pages\Simulator.tsx:452:          right={
+frontend\src\pages\Simulator.tsx:453:            <div className="flex items-center gap-2">
+frontend\src\pages\Simulator.tsx:455:                onClick={resetFilters}
+frontend\src\pages\Simulator.tsx:456:                disabled={loading}
+frontend\src\pages\Simulator.tsx:457:                className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-slate-100 text-slate-800 hover:bg-slate-200 disabled:opacity-60"
+frontend\src\pages\Simulator.tsx:463:                onClick={applyFilters}
+frontend\src\pages\Simulator.tsx:464:                disabled={loading}
+frontend\src\pages\Simulator.tsx:465:                className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60"
+frontend\src\pages\Simulator.tsx:473:        <div className="grid gap-3 md:grid-cols-2">
+frontend\src\pages\Simulator.tsx:475:            <label className="block text-xs text-slate-500 mb-1">Período início</label>
+frontend\src\pages\Simulator.tsx:477:              type="date"
+frontend\src\pages\Simulator.tsx:478:              name="periodo_inicio"
+frontend\src\pages\Simulator.tsx:479:              value={filters.periodo_inicio}
+frontend\src\pages\Simulator.tsx:480:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:481:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:486:            <label className="block text-xs text-slate-500 mb-1">Período fim</label>
+frontend\src\pages\Simulator.tsx:488:              type="date"
+frontend\src\pages\Simulator.tsx:489:              name="periodo_fim"
+frontend\src\pages\Simulator.tsx:490:              value={filters.periodo_fim}
+frontend\src\pages\Simulator.tsx:491:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:492:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:497:        <div className="grid gap-3 md:grid-cols-5">
+frontend\src\pages\Simulator.tsx:499:            <label className="block text-xs text-slate-500 mb-1">UF Origem</label>
+frontend\src\pages\Simulator.tsx:501:              name="uf_origem"
+frontend\src\pages\Simulator.tsx:502:              value={filters.uf_origem}
+frontend\src\pages\Simulator.tsx:503:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:504:              placeholder="Ex: AM"
+frontend\src\pages\Simulator.tsx:505:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:510:            <label className="block text-xs text-slate-500 mb-1">UF Destino</label>
+frontend\src\pages\Simulator.tsx:512:              name="uf_destino"
+frontend\src\pages\Simulator.tsx:513:              value={filters.uf_destino}
+frontend\src\pages\Simulator.tsx:514:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:515:              placeholder="Ex: SP"
+frontend\src\pages\Simulator.tsx:516:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:521:            <label className="block text-xs text-slate-500 mb-1">NCM</label>
+frontend\src\pages\Simulator.tsx:523:              name="ncm"
+frontend\src\pages\Simulator.tsx:524:              value={filters.ncm}
+frontend\src\pages\Simulator.tsx:525:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:526:              placeholder="Ex: 87083090"
+frontend\src\pages\Simulator.tsx:527:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:532:            <label className="block text-xs text-slate-500 mb-1">Produto</label>
+frontend\src\pages\Simulator.tsx:534:              name="produto"
+frontend\src\pages\Simulator.tsx:535:              value={filters.produto}
+frontend\src\pages\Simulator.tsx:536:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:537:              placeholder="Ex: filtro"
+frontend\src\pages\Simulator.tsx:538:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:543:            <label className="block text-xs text-slate-500 mb-1">CFOP</label>
+frontend\src\pages\Simulator.tsx:545:              name="cfop"
+frontend\src\pages\Simulator.tsx:546:              value={filters.cfop}
+frontend\src\pages\Simulator.tsx:547:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:548:              placeholder="Ex: 6102"
+frontend\src\pages\Simulator.tsx:549:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:554:        <div className="grid gap-3 md:grid-cols-3">
+frontend\src\pages\Simulator.tsx:556:            <label className="block text-xs text-slate-500 mb-1">Movimento</label>
+frontend\src\pages\Simulator.tsx:558:              name="movimento"
+frontend\src\pages\Simulator.tsx:559:              value={filters.movimento}
+frontend\src\pages\Simulator.tsx:560:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:561:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:563:              <option value="">(Todos)</option>
+frontend\src\pages\Simulator.tsx:564:              <option value="ENTRADA">ENTRADA</option>
+frontend\src\pages\Simulator.tsx:565:              <option value="SAIDA">SAÍDA</option>
+frontend\src\pages\Simulator.tsx:570:            <label className="block text-xs text-slate-500 mb-1">Finalidade</label>
+frontend\src\pages\Simulator.tsx:572:              name="finalidade"
+frontend\src\pages\Simulator.tsx:573:              value={filters.finalidade}
+frontend\src\pages\Simulator.tsx:574:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:575:              className="w-full border rounded-md px-3 py-2 text-sm"
+frontend\src\pages\Simulator.tsx:577:              <option value="">(Todas)</option>
+frontend\src\pages\Simulator.tsx:578:              <option value="REVENDA">REVENDA</option>
+frontend\src\pages\Simulator.tsx:579:              <option value="CONSUMO">CONSUMO</option>
+frontend\src\pages\Simulator.tsx:580:              <option value="ATIVO">ATIVO</option>
+frontend\src\pages\Simulator.tsx:581:              <option value="TRANSFERENCIA">TRANSFERÊNCIA</option>
+frontend\src\pages\Simulator.tsx:582:              <option value="OUTRAS">OUTRAS</option>
+frontend\src\pages\Simulator.tsx:587:            <label className="block text-xs text-slate-500 mb-1">Regras (JSON)</label>
+frontend\src\pages\Simulator.tsx:589:              name="regras_json"
+frontend\src\pages\Simulator.tsx:590:              value={filters.regras_json}
+frontend\src\pages\Simulator.tsx:591:              onChange={onChangeFilter}
+frontend\src\pages\Simulator.tsx:592:              placeholder='Ex: [{"match":"cfop_prefix","value":"11","finalidade":"REVENDA","perc_credit":1.0}]'
+frontend\src\pages\Simulator.tsx:593:              className="w-full border rounded-md px-3 py-2 text-sm h-[40px]"
+frontend\src\pages\Simulator.tsx:601:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Simulator.tsx:602:          <p className="text-sm text-red-600">{err}</p>
+frontend\src\pages\Simulator.tsx:603:          <p className="text-xs text-slate-500 mt-2">
+frontend\src\pages\Simulator.tsx:604:            Dica: DevTools (F12) &gt; Network &gt; GET <b>{API}/simulator/v4/run</b>
+frontend\src\pages\Simulator.tsx:609:      {!loading && hasBase && data?.base?.rows === 0 && (
+frontend\src\pages\Simulator.tsx:610:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Simulator.tsx:611:          <div className="text-sm text-slate-700 font-semibold">Nenhum registro encontrado</div>
+frontend\src\pages\Simulator.tsx:612:          <div className="text-sm text-slate-500 mt-1">
+frontend\src\pages\Simulator.tsx:620:        <div className="grid gap-4 md:grid-cols-4">
+frontend\src\pages\Simulator.tsx:629:        <div className="grid gap-4 md:grid-cols-5">
+frontend\src\pages\Simulator.tsx:630:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Simulator.tsx:631:            <div className="text-xs text-slate-500">Carga atual (ICMS+PIS+COFINS)</div>
+frontend\src\pages\Simulator.tsx:632:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpiCards.cargaAtual)}</div>
+frontend\src\pages\Simulator.tsx:635:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Simulator.tsx:636:            <div className="text-xs text-slate-500">Reforma (bruta)</div>
+frontend\src\pages\Simulator.tsx:637:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpiCards.bruta)}</div>
+frontend\src\pages\Simulator.tsx:640:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Simulator.tsx:641:            <div className="text-xs text-slate-500">Crédito apropriado no período</div>
+frontend\src\pages\Simulator.tsx:642:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpiCards.creditoApropriado)}</div>
+frontend\src\pages\Simulator.tsx:645:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Simulator.tsx:646:            <div className="text-xs text-slate-500">Reforma (líquida)</div>
+frontend\src\pages\Simulator.tsx:647:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpiCards.liquida)}</div>
+frontend\src\pages\Simulator.tsx:650:          <div className="bg-white rounded-xl shadow-sm p-5">
+frontend\src\pages\Simulator.tsx:651:            <div className="text-xs text-slate-500">Impacto caixa (estimado)</div>
+frontend\src\pages\Simulator.tsx:652:            <div className="text-xl font-semibold text-slate-900 mt-1">{formatMoneyBR(kpiCards.caixa)}</div>
+frontend\src\pages\Simulator.tsx:659:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Simulator.tsx:661:            title="Série mensal — Carga Atual vs Reforma"
+frontend\src\pages\Simulator.tsx:662:            subtitle="Reforma líquida já considera crédito apropriado no período (ATIVO em 1/N)."
+frontend\src\pages\Simulator.tsx:665:          <div className="h-[320px] mt-4">
+frontend\src\pages\Simulator.tsx:666:            <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Simulator.tsx:667:              <LineChart data={chartSeries} margin={{ top: 8, right: 12, left: 44, bottom: 8 }}>
+frontend\src\pages\Simulator.tsx:668:                <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Simulator.tsx:669:                <XAxis dataKey="period" minTickGap={24} />
+frontend\src\pages\Simulator.tsx:670:                <YAxis width={96} tickMargin={8} tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Simulator.tsx:671:                <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Simulator.tsx:674:                  type="monotone"
+frontend\src\pages\Simulator.tsx:675:                  dataKey="atual_total"
+frontend\src\pages\Simulator.tsx:676:                  name="Atual"
+frontend\src\pages\Simulator.tsx:677:                  strokeWidth={2}
+frontend\src\pages\Simulator.tsx:678:                  dot={false}
+frontend\src\pages\Simulator.tsx:679:                  isAnimationActive={false}
+frontend\src\pages\Simulator.tsx:682:                  type="monotone"
+frontend\src\pages\Simulator.tsx:683:                  dataKey="reforma_bruta"
+frontend\src\pages\Simulator.tsx:684:                  name="Reforma (bruta)"
+frontend\src\pages\Simulator.tsx:685:                  strokeWidth={2}
+frontend\src\pages\Simulator.tsx:686:                  dot={false}
+frontend\src\pages\Simulator.tsx:687:                  isAnimationActive={false}
+frontend\src\pages\Simulator.tsx:690:                  type="monotone"
+frontend\src\pages\Simulator.tsx:691:                  dataKey="reforma_liquida"
+frontend\src\pages\Simulator.tsx:692:                  name="Reforma (líquida)"
+frontend\src\pages\Simulator.tsx:693:                  strokeWidth={2}
+frontend\src\pages\Simulator.tsx:694:                  dot={false}
+frontend\src\pages\Simulator.tsx:695:                  isAnimationActive={false}
+frontend\src\pages\Simulator.tsx:705:  <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Simulator.tsx:707:      title="Credit Ledger"
+frontend\src\pages\Simulator.tsx:708:      subtitle="Resumo de crédito gerado, glosa, apropriado e saldo a apropriar."
+frontend\src\pages\Simulator.tsx:712:    <div className="grid gap-4 md:grid-cols-5 mt-4">
+frontend\src\pages\Simulator.tsx:713:      <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Simulator.tsx:714:        <div className="text-xs text-slate-500">Crédito gerado</div>
+frontend\src\pages\Simulator.tsx:715:        <div className="text-xl font-semibold text-slate-900 mt-1">
+frontend\src\pages\Simulator.tsx:720:      <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Simulator.tsx:721:        <div className="text-xs text-slate-500">Glosa</div>
+frontend\src\pages\Simulator.tsx:722:        <div className="text-xl font-semibold text-slate-900 mt-1">
+frontend\src\pages\Simulator.tsx:727:      <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Simulator.tsx:728:        <div className="text-xs text-slate-500">Crédito após glosa</div>
+frontend\src\pages\Simulator.tsx:729:        <div className="text-xl font-semibold text-slate-900 mt-1">
+frontend\src\pages\Simulator.tsx:734:      <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Simulator.tsx:735:        <div className="text-xs text-slate-500">Crédito apropriado</div>
+frontend\src\pages\Simulator.tsx:736:        <div className="text-xl font-semibold text-slate-900 mt-1">
+frontend\src\pages\Simulator.tsx:741:      <div className="bg-slate-50 rounded-xl p-5 border">
+frontend\src\pages\Simulator.tsx:742:        <div className="text-xs text-slate-500">Saldo a apropriar</div>
+frontend\src\pages\Simulator.tsx:743:        <div className="text-xl font-semibold text-slate-900 mt-1">
+frontend\src\pages\Simulator.tsx:750:    <div className="border rounded-lg overflow-auto mt-6">
+frontend\src\pages\Simulator.tsx:751:      <table className="min-w-[980px] w-full text-sm border-collapse">
+frontend\src\pages\Simulator.tsx:753:          <tr className="bg-slate-50">
+frontend\src\pages\Simulator.tsx:754:            <th className="border px-2 py-2 text-left">Finalidade</th>
+frontend\src\pages\Simulator.tsx:755:            <th className="border px-2 py-2 text-right">Crédito gerado</th>
+frontend\src\pages\Simulator.tsx:756:            <th className="border px-2 py-2 text-right">Glosa</th>
+frontend\src\pages\Simulator.tsx:757:            <th className="border px-2 py-2 text-right">Após glosa</th>
+frontend\src\pages\Simulator.tsx:758:            <th className="border px-2 py-2 text-right">Apropriado no período</th>
+frontend\src\pages\Simulator.tsx:762:          {creditByFinalidade.map((it) => (
+frontend\src\pages\Simulator.tsx:763:            <tr key={it.finalidade}>
+frontend\src\pages\Simulator.tsx:764:              <td className="border px-2 py-2">{it.finalidade}</td>
+frontend\src\pages\Simulator.tsx:765:              <td className="border px-2 py-2 text-right">{formatMoneyBR(it.credito_gerado)}</td>
+frontend\src\pages\Simulator.tsx:766:              <td className="border px-2 py-2 text-right">{formatMoneyBR(it.glosa)}</td>
+frontend\src\pages\Simulator.tsx:767:              <td className="border px-2 py-2 text-right">{formatMoneyBR(it.credito_apos_glosa)}</td>
+frontend\src\pages\Simulator.tsx:768:              <td className="border px-2 py-2 text-right">{formatMoneyBR(it.credito_apropriado_no_periodo)}</td>
+frontend\src\pages\Simulator.tsx:772:          {creditByFinalidade.length === 0 && (
+frontend\src\pages\Simulator.tsx:774:              <td className="border px-2 py-3 text-slate-500" colSpan={5}>
+frontend\src\pages\Simulator.tsx:785:      <div className="bg-white rounded-xl shadow-sm p-6 mt-6 border">
+frontend\src\pages\Simulator.tsx:787:          title="Apropriação mensal (crédito apropriado)"
+frontend\src\pages\Simulator.tsx:788:          subtitle="Base para aging e saldo a apropriar por mês."
+frontend\src\pages\Simulator.tsx:791:        <div className="h-[260px] mt-4">
+frontend\src\pages\Simulator.tsx:792:          <ResponsiveContainer width="100%" height="100%">
+frontend\src\pages\Simulator.tsx:793:            <LineChart data={creditSeries} margin={{ top: 8, right: 12, left: 44, bottom: 8 }}>
+frontend\src\pages\Simulator.tsx:794:              <CartesianGrid strokeDasharray="3 3" />
+frontend\src\pages\Simulator.tsx:795:              <XAxis dataKey="period" minTickGap={24} />
+frontend\src\pages\Simulator.tsx:796:              <YAxis width={96} tickMargin={8} tickFormatter={formatAxisNumber} tick={{ fontSize: 11 }} />
+frontend\src\pages\Simulator.tsx:797:              <Tooltip content={<TooltipMoney />} />
+frontend\src\pages\Simulator.tsx:800:                type="monotone"
+frontend\src\pages\Simulator.tsx:801:                dataKey="credito_apropriado"
+frontend\src\pages\Simulator.tsx:802:                name="Crédito apropriado"
+frontend\src\pages\Simulator.tsx:803:                strokeWidth={2}
+frontend\src\pages\Simulator.tsx:804:                dot={false}
+frontend\src\pages\Simulator.tsx:805:                isAnimationActive={false}
+frontend\src\pages\Simulator.tsx:817:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Simulator.tsx:818:          <SectionTitle title="Créditos por Finalidade" subtitle="Entrada base e crédito (potencial, glosa e apropriado)." />
+frontend\src\pages\Simulator.tsx:820:          <div className="border rounded-lg overflow-auto mt-4">
+frontend\src\pages\Simulator.tsx:821:            <table className="min-w-[980px] w-full text-sm border-collapse">
+frontend\src\pages\Simulator.tsx:823:                <tr className="bg-slate-50">
+frontend\src\pages\Simulator.tsx:824:                  <th className="border px-2 py-2 text-left">Finalidade</th>
+frontend\src\pages\Simulator.tsx:825:                  <th className="border px-2 py-2 text-right">Entrada base</th>
+frontend\src\pages\Simulator.tsx:826:                  <th className="border px-2 py-2 text-right">Crédito potencial</th>
+frontend\src\pages\Simulator.tsx:827:                  <th className="border px-2 py-2 text-right">Glosa</th>
+frontend\src\pages\Simulator.tsx:828:                  <th className="border px-2 py-2 text-right">Crédito aproveitado</th>
+frontend\src\pages\Simulator.tsx:829:                  <th className="border px-2 py-2 text-right">Apropriado no período</th>
+frontend\src\pages\Simulator.tsx:833:                {(data?.breakdown_finalidade ?? []).map((it) => (
+frontend\src\pages\Simulator.tsx:834:                  <tr key={it.finalidade}>
+frontend\src\pages\Simulator.tsx:835:                    <td className="border px-2 py-2">{it.finalidade}</td>
+frontend\src\pages\Simulator.tsx:836:                    <td className="border px-2 py-2 text-right">{formatMoneyBR(safeNumber(it.entrada_base))}</td>
+frontend\src\pages\Simulator.tsx:837:                    <td className="border px-2 py-2 text-right">{formatMoneyBR(safeNumber(it.credito_potencial))}</td>
+frontend\src\pages\Simulator.tsx:838:                    <td className="border px-2 py-2 text-right">{formatMoneyBR(safeNumber(it.glosa))}</td>
+frontend\src\pages\Simulator.tsx:839:                    <td className="border px-2 py-2 text-right">{formatMoneyBR(safeNumber(it.credito_aproveitado))}</td>
+frontend\src\pages\Simulator.tsx:840:                    <td className="border px-2 py-2 text-right">{formatMoneyBR(safeNumber(it.credito_apropriado_no_periodo))}</td>
+frontend\src\pages\Simulator.tsx:851:        <div className="bg-white rounded-xl shadow-sm p-6">
+frontend\src\pages\Simulator.tsx:852:          <div className="text-sm text-slate-700 font-semibold">Base ainda não importada</div>
+frontend\src\pages\Simulator.tsx:853:          <div className="text-sm text-slate-500 mt-1">
+frontend\src\pages\SimulatorV4.tsx:1:export type Period = string; // "YYYY-MM"
+frontend\src\pages\SimulatorV4.tsx:3:export type CreditLedgerSummary = {
+frontend\src\pages\SimulatorV4.tsx:11:export type CreditLedgerSeriesPoint = {
+frontend\src\pages\SimulatorV4.tsx:16:export type CreditLedger = {
+frontend\src\pages\SimulatorV4.tsx:28:export type CashLedgerSummary = {
+frontend\src\pages\SimulatorV4.tsx:40:export type CashLedgerSeriesPoint = {
+frontend\src\pages\SimulatorV4.tsx:50:export type CashLedger = {
+frontend\src\pages\SimulatorV4.tsx:55:export type SimulatorV4Response = {
+frontend\src\services\api.ts:1:import axios from "axios";
+frontend\src\services\api.ts:3:export const api = axios.create({
+frontend\src\services\api.ts:4:  baseURL: import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000",
+frontend\src\services\taxParamsApi.ts:1:export type TaxParamTipo = "CBS_PADRAO" | "IBS_PADRAO";
+frontend\src\services\taxParamsApi.ts:11:const BASE_URL = "http://127.0.0.1:8000";
+frontend\src\services\taxParamsApi.ts:14:  const url = ano ? `${BASE_URL}/tax-params/?ano=${ano}` : `${BASE_URL}/tax-params/`;
+frontend\src\services\taxParamsApi.ts:15:  const res = await fetch(url);
+frontend\src\services\taxParamsApi.ts:21:  const res = await fetch(`${BASE_URL}/tax-params/`, {
+frontend\src\services\taxParamsApi.ts:31:  const params = new URLSearchParams();
+frontend\src\services\taxParamsApi.ts:36:  const res = await fetch(`${BASE_URL}/tax-params/?${params.toString()}`, {
+frontend\src\services\taxScheduleApi.ts:1:// frontend/src/taxScheduleApi.ts
+frontend\src\services\taxScheduleApi.ts:9:const API_BASE = "http://127.0.0.1:8000";
+frontend\src\services\taxScheduleApi.ts:12:  const resp = await fetch(`${API_BASE}/tax-schedule/`, {
+frontend\src\services\taxScheduleApi.ts:17:    const text = await resp.text();
+frontend\src\services\taxScheduleApi.ts:22:  const data = (await resp.json()) as TaxSchedule[];
+frontend\src\services\taxScheduleApi.ts:30:  const resp = await fetch(`${API_BASE}/tax-schedule/`, {
+frontend\src\services\taxScheduleApi.ts:39:    const text = await resp.text();
+frontend\src\services\taxScheduleApi.ts:44:  const data = (await resp.json()) as TaxSchedule;
+frontend\src\SimulacaoManual.tsx:2:import { simularManual, SimulacaoManualPayload, SimulacaoManualResponse } from "../simulacaoManualApi";
+frontend\src\SimulacaoManual.tsx:4:const initialForm: SimulacaoManualPayload = {
+frontend\src\SimulacaoManual.tsx:31:export const SimulacaoManual: React.FC = () => {
+frontend\src\SimulacaoManual.tsx:32:  const [form, setForm] = useState<SimulacaoManualPayload>(initialForm);
+frontend\src\SimulacaoManual.tsx:33:  const [loading, setLoading] = useState(false);
+frontend\src\SimulacaoManual.tsx:34:  const [result, setResult] = useState<SimulacaoManualResponse | null>(null);
+frontend\src\SimulacaoManual.tsx:35:  const [error, setError] = useState<string | null>(null);
+frontend\src\SimulacaoManual.tsx:38:    const { name, value } = e.target;
+frontend\src\SimulacaoManual.tsx:40:    const numberFields: (keyof SimulacaoManualPayload)[] = [
+frontend\src\SimulacaoManual.tsx:52:      const num = value === "" ? 0 : Number(value);
+frontend\src\SimulacaoManual.tsx:53:      setForm((prev) => ({ ...prev, [name]: Number.isFinite(num) ? num : 0 } as any));
+frontend\src\SimulacaoManual.tsx:57:    // strings opcionais: vazio => null
+frontend\src\SimulacaoManual.tsx:58:    const nullableFields: (keyof SimulacaoManualPayload)[] = ["ncm", "produto", "movimento", "cfop"];
+frontend\src\SimulacaoManual.tsx:60:      setForm((prev) => ({ ...prev, [name]: value.trim() === "" ? null : value } as any));
+frontend\src\SimulacaoManual.tsx:64:    setForm((prev) => ({ ...prev, [name]: value } as any));
+frontend\src\SimulacaoManual.tsx:71:      const data = await simularManual(form);
+frontend\src\SimulacaoManual.tsx:82:  const resumoPorTributo = useMemo(() => {
+frontend\src\SimulacaoManual.tsx:94:    <div className="space-y-6">
+frontend\src\SimulacaoManual.tsx:96:        <h1 className="text-2xl font-semibold text-slate-800">Calculadora da Reforma — Simulação Manual</h1>
+frontend\src\SimulacaoManual.tsx:97:        <p className="text-sm text-slate-500 mt-1">
+frontend\src\SimulacaoManual.tsx:102:      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
+frontend\src\SimulacaoManual.tsx:103:        <h2 className="font-semibold text-slate-700">Parâmetros da simulação manual</h2>
+frontend\src\SimulacaoManual.tsx:105:        <div className="grid gap-4 md:grid-cols-3">
+frontend\src\SimulacaoManual.tsx:107:            <label className="block text-sm text-slate-600 mb-1">Ano do cronograma (2026–2033)</label>
+frontend\src\SimulacaoManual.tsx:108:            <input type="number" name="ano" min={2026} max={2033} value={form.ano} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:109:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:113:            <label className="block text-sm text-slate-600 mb-1">Valor do produto (R$)</label>
+frontend\src\SimulacaoManual.tsx:114:            <input type="number" name="valor_produto" value={form.valor_produto} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:115:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:119:            <label className="block text-sm text-slate-600 mb-1">BC ICMS (R$)</label>
+frontend\src\SimulacaoManual.tsx:120:            <input type="number" name="bc_icms" value={form.bc_icms} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:121:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:125:            <label className="block text-sm text-slate-600 mb-1">BC PIS (R$)</label>
+frontend\src\SimulacaoManual.tsx:126:            <input type="number" name="bc_pis" value={form.bc_pis} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:127:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:131:            <label className="block text-sm text-slate-600 mb-1">BC COFINS (R$)</label>
+frontend\src\SimulacaoManual.tsx:132:            <input type="number" name="bc_cofins" value={form.bc_cofins} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:133:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:137:            <label className="block text-sm text-slate-600 mb-1">Alíquota ICMS atual (decimal)</label>
+frontend\src\SimulacaoManual.tsx:138:            <input type="number" step="0.0001" name="aliq_icms_atual" value={form.aliq_icms_atual} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:139:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:140:            <div className="text-xs text-slate-400 mt-1">Ex.: 0,04 = 4%</div>
+frontend\src\SimulacaoManual.tsx:144:            <label className="block text-sm text-slate-600 mb-1">Alíquota PIS atual (decimal)</label>
+frontend\src\SimulacaoManual.tsx:145:            <input type="number" step="0.0001" name="aliq_pis_atual" value={form.aliq_pis_atual} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:146:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:150:            <label className="block text-sm text-slate-600 mb-1">Alíquota COFINS atual (decimal)</label>
+frontend\src\SimulacaoManual.tsx:151:            <input type="number" step="0.0001" name="aliq_cofins_atual" value={form.aliq_cofins_atual} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:152:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:156:            <label className="block text-sm text-slate-600 mb-1">UF Origem</label>
+frontend\src\SimulacaoManual.tsx:157:            <input name="uf_origem" value={form.uf_origem} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:158:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:162:            <label className="block text-sm text-slate-600 mb-1">UF Destino</label>
+frontend\src\SimulacaoManual.tsx:163:            <input name="uf_destino" value={form.uf_destino} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:164:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:168:            <label className="block text-sm text-slate-600 mb-1">NCM</label>
+frontend\src\SimulacaoManual.tsx:169:            <input name="ncm" value={form.ncm ?? ""} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:170:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:174:            <label className="block text-sm text-slate-600 mb-1">CFOP</label>
+frontend\src\SimulacaoManual.tsx:175:            <input name="cfop" value={form.cfop ?? ""} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:176:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:180:            <label className="block text-sm text-slate-600 mb-1">Movimento</label>
+frontend\src\SimulacaoManual.tsx:181:            <input name="movimento" value={form.movimento ?? ""} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:182:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:185:          <div className="md:col-span-3">
+frontend\src\SimulacaoManual.tsx:186:            <label className="block text-sm text-slate-600 mb-1">Produto</label>
+frontend\src\SimulacaoManual.tsx:187:            <input name="produto" value={form.produto ?? ""} onChange={handleChange}
+frontend\src\SimulacaoManual.tsx:188:              className="w-full border rounded-md px-3 py-2 text-sm" />
+frontend\src\SimulacaoManual.tsx:193:          onClick={handleSimular}
+frontend\src\SimulacaoManual.tsx:194:          disabled={loading}
+frontend\src\SimulacaoManual.tsx:195:          className="mt-2 inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60"
+frontend\src\SimulacaoManual.tsx:200:        {error && <p className="text-sm text-red-600">{error}</p>}
+frontend\src\SimulacaoManual.tsx:204:        <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+frontend\src\SimulacaoManual.tsx:205:          <h2 className="font-semibold text-slate-700">Resultado da simulação — Ano {result.ano}</h2>
+frontend\src\SimulacaoManual.tsx:207:          <div className="grid gap-4 md:grid-cols-4">
+frontend\src\SimulacaoManual.tsx:208:            <div className="border rounded-lg p-4">
+frontend\src\SimulacaoManual.tsx:209:              <div className="text-xs text-slate-500 mb-1">Carga atual</div>
+frontend\src\SimulacaoManual.tsx:210:              <div className="text-lg font-semibold">{money(result.carga_total_atual)}</div>
+frontend\src\SimulacaoManual.tsx:212:            <div className="border rounded-lg p-4">
+frontend\src\SimulacaoManual.tsx:213:              <div className="text-xs text-slate-500 mb-1">Carga reforma</div>
+frontend\src\SimulacaoManual.tsx:214:              <div className="text-lg font-semibold">{money(result.carga_total_reforma)}</div>
+frontend\src\SimulacaoManual.tsx:216:            <div className="border rounded-lg p-4">
+frontend\src\SimulacaoManual.tsx:217:              <div className="text-xs text-slate-500 mb-1">Diferença absoluta</div>
+frontend\src\SimulacaoManual.tsx:218:              <div className="text-lg font-semibold">{money(result.diferenca_absoluta)}</div>
+frontend\src\SimulacaoManual.tsx:220:            <div className="border rounded-lg p-4">
+frontend\src\SimulacaoManual.tsx:221:              <div className="text-xs text-slate-500 mb-1">Diferença percentual</div>
+frontend\src\SimulacaoManual.tsx:222:              <div className="text-lg font-semibold">{percent(result.diferenca_percentual)}</div>
+frontend\src\SimulacaoManual.tsx:227:            <h3 className="font-semibold text-slate-700 mb-2">Por tributo</h3>
+frontend\src\SimulacaoManual.tsx:228:            <table className="w-full text-sm border-collapse">
+frontend\src\SimulacaoManual.tsx:230:                <tr className="bg-slate-50">
+frontend\src\SimulacaoManual.tsx:231:                  <th className="border px-2 py-1 text-left">Tributo</th>
+frontend\src\SimulacaoManual.tsx:232:                  <th className="border px-2 py-1 text-right">Atual</th>
+frontend\src\SimulacaoManual.tsx:233:                  <th className="border px-2 py-1 text-right">Reforma</th>
+frontend\src\SimulacaoManual.tsx:237:                {resumoPorTributo.map((d) => (
+frontend\src\SimulacaoManual.tsx:238:                  <tr key={d.tributo}>
+frontend\src\SimulacaoManual.tsx:239:                    <td className="border px-2 py-1">{d.tributo}</td>
+frontend\src\SimulacaoManual.tsx:240:                    <td className="border px-2 py-1 text-right">{money(d.atual)}</td>
+frontend\src\SimulacaoManual.tsx:241:                    <td className="border px-2 py-1 text-right">{money(d.reforma)}</td>
+frontend\src\simulacaoManualApi.ts:1:// frontend/src/simulacaoManualApi.js
+frontend\src\simulacaoManualApi.ts:38:// Função que chama a API FastAPI
+frontend\src\simulacaoManualApi.ts:42:  const response = await fetch("http://127.0.0.1:8000/simulacao-manual", {
+frontend\src\simulacaoManualApi.ts:51:    const text = await response.text();
+frontend\src\simulacaoManualApi.ts:52:    console.error("Erro na API:", response.status, text);
+frontend\src\simulacaoManualApi.ts:53:    throw new Error("Erro ao chamar a API de simulação manual");
+frontend\src\simulacaoManualApi.ts:56:  const data = (await response.json()) as SimulacaoManualResponse;
+frontend\src\utils\csvPreview.ts:2:export type CsvPreview = {
+frontend\src\utils\csvPreview.ts:17:  const sample = text.slice(0, 50_000);
+frontend\src\utils\csvPreview.ts:20:  const semicolonCount = (sample.match(/;/g) || []).length;
+frontend\src\utils\csvPreview.ts:21:  const commaCount = (sample.match(/,/g) || []).length;
+frontend\src\utils\csvPreview.ts:22:  const tabCount = (sample.match(/\t/g) || []).length;
+frontend\src\utils\csvPreview.ts:25:  if (semicolonCount >= commaCount && semicolonCount >= tabCount) return ";";
+frontend\src\utils\csvPreview.ts:26:  if (commaCount >= tabCount) return ",";
+frontend\src\utils\csvPreview.ts:35:export function parseCsvPreview(text: string, maxRows = 20): CsvPreview {
+frontend\src\utils\csvPreview.ts:36:  const delimiter = sniffDelimiter(text);
+frontend\src\utils\csvPreview.ts:38:  const lines = text
+frontend\src\utils\csvPreview.ts:42:    .filter((l) => l.trim().length > 0);
+frontend\src\utils\csvPreview.ts:44:  if (lines.length === 0) {
+frontend\src\utils\csvPreview.ts:48:  const rawHeader = lines[0].split(delimiter).map((h) => h.trim());
+frontend\src\utils\csvPreview.ts:49:  const header = rawHeader.map((h) => normalizeHeader(h)).filter(Boolean);
+frontend\src\utils\csvPreview.ts:51:  const rows: Record<string, string>[] = [];
+frontend\src\utils\csvPreview.ts:53:  for (let i = 1; i < lines.length && rows.length < maxRows; i++) {
+frontend\src\utils\csvPreview.ts:54:    const parts = lines[i].split(delimiter);
+frontend\src\utils\csvPreview.ts:55:    const row: Record<string, string> = {};
+frontend\src\utils\csvPreview.ts:57:    for (let c = 0; c < header.length; c++) {
+frontend\src\utils\csvPreview.ts:58:      row[header[c]] = (parts[c] ?? "").trim();
+frontend\src\utils\csvPreview.ts:67:  const normHeader = header.map(normalizeHeader);
+frontend\src\utils\csvPreview.ts:68:  const missing = required
+frontend\src\utils\csvPreview.ts:69:    .map((c) => normalizeHeader(c))
+frontend\src\utils\csvPreview.ts:70:    .filter((c) => !normHeader.includes(c));
+frontend\src\utils\csvPreview.ts:73:    ok: missing.length === 0,

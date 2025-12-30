@@ -1,0 +1,18 @@
+frontend\src\components\Sidebar.tsx:28:  { key: "simulator", label: "Simulador", icon: <Calculator size={18} />, to: "/simulator-v4" },
+frontend\src\pages\Dashboard.tsx:138:type SimulatorV4RunResponse = {
+frontend\src\pages\Dashboard.tsx:443:  const [simV4, setSimV4] = useState<SimulatorV4RunResponse | null>(null);
+frontend\src\pages\Dashboard.tsx:639:  async function loadSimulatorV4(f: DashboardFilters) {
+frontend\src\pages\Dashboard.tsx:657:      const r = await fetch(`${API}/simulator/v4/run${qs}`);
+frontend\src\pages\Dashboard.tsx:663:      const json = (await r.json()) as SimulatorV4RunResponse;
+frontend\src\pages\Dashboard.tsx:687:    loadSimulatorV4(empty);
+frontend\src\pages\Dashboard.tsx:710:    loadSimulatorV4(normalized);
+frontend\src\pages\Dashboard.tsx:716:    loadSimulatorV4(appliedFilters);
+frontend\src\pages\Dashboard.tsx:739:    loadSimulatorV4(nextApplied);
+frontend\src\pages\Dashboard.tsx:871:            loadSimulatorV4(appliedFilters);
+frontend\src\pages\Simulator.tsx:16: * Types (compatível com backend /simulator/v4/run)
+frontend\src\pages\Simulator.tsx:90:type SimulatorV4Response = {
+frontend\src\pages\Simulator.tsx:207:  const [data, setData] = useState<SimulatorV4Response | null>(null);
+frontend\src\pages\Simulator.tsx:264:      const r = await fetch(`${API}/simulator/v4/run${qs}`, { signal });
+frontend\src\pages\Simulator.tsx:270:      const json = (await r.json()) as SimulatorV4Response;
+frontend\src\pages\Simulator.tsx:604:            Dica: DevTools (F12) &gt; Network &gt; GET <b>{API}/simulator/v4/run</b>
+frontend\src\pages\SimulatorV4.tsx:55:export type SimulatorV4Response = {

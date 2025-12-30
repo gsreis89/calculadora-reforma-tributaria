@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": "753ee365-e147-48b2-8f3f-9aecab980848",
+      "ano": 2026,
+      "uf": "AM",
+      "tipo": "CBS_PADRAO",
+      "aliquota": 0.009,
+      "descricao": "Cadastro manual"
+    },
+    {
+      "id": "bfa25718-7915-48f0-814f-6f163f56033f",
+      "ano": 2026,
+      "uf": "AM",
+      "tipo": "IBS_PADRAO",
+      "aliquota": 0.009,
+      "descricao": "Cadastro manual"
+    }
+  ]
+}

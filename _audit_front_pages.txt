@@ -1,0 +1,7 @@
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\Dashboard.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\DataBase.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\Scenarios.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\Settings.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\SimulacaoManual.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\Simulator.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\pages\SimulatorV4.tsx

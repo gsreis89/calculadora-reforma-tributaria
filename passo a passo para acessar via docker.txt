@@ -1,0 +1,30 @@
+para acessar o backend
+
+cd C:\Users\guilhermereis\projetos\calculadora-reforma\backend
+
+.venv\Scripts\activate
+
+uvicorn app.main:app --reload --port 8000
+
+------------------------------------------------------------------------
+
+para acessar o frontend
+
+cd C:\Users\guilhermereis\projetos\calculadora-reforma\frontend
+
+Rodar de novo:
+
+docker run -it --rm ^
+  -v "%cd%":/app ^
+  -w /app ^
+  -p 5173:5173 ^
+  node:24-alpine sh
+
+
+Dentro do contêiner, só fazer:
+
+npm run dev -- --host 0.0.0.0 --port 5173
+
+
+------------------------------------------------------------------------
+

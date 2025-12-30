@@ -1,0 +1,6 @@
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\components\AutocompleteInput.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\components\CashLedgerCard.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\components\CreditLedgerCard.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\components\ParametrosTributarios.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\components\Sidebar.tsx
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\components\Topbar.tsx

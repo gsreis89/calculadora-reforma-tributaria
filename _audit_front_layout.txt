@@ -1,0 +1,1 @@
+C:\Users\guilhermereis\projetos\calculadora-reforma\frontend\src\layout\MainLayout.tsx
